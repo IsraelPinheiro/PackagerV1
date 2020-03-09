@@ -27,7 +27,9 @@
     </li>
 
     <!-- Divider -->
-    <hr class="sidebar-divider my-0">
+    <hr class="sidebar-divider">
+    <!-- Heading - Management -->
+    <div class="sidebar-heading">Gestão</div>
     <!-- Nav Item - Reports -->
     <li class="nav-item">
         <a class="nav-link" href="index.html">
