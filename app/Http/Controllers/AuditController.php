@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class AccessLogController extends Controller{
+class AuditController extends Controller{
     /**
      * Display a listing of the resource.
      *
