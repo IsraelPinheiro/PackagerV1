@@ -22,9 +22,7 @@
     <hr class="sidebar-divider">
 
     <!-- Heading -->
-    <div class="sidebar-heading">
-        Interface
-    </div>
+    <div class="sidebar-heading">Interface</div>
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
@@ -62,9 +60,7 @@
     <hr class="sidebar-divider">
 
     <!-- Heading -->
-    <div class="sidebar-heading">
-        Addons
-    </div>
+    <div class="sidebar-heading">Addons</div>
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item active">
