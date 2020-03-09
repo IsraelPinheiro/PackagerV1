@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration{
 
             $table->bigInteger('max_file_size')->unsigned()->default(0);    //Max size (In Bytes) of a given file. A value of 0 means there is no limit
             $table->bigInteger('max_package_size')->unsigned()->default(0); //Max total size (In Bytes) of a given package. A value of 0 means there is no limit
+            $table->bigInteger('max_storage_size')->unsigned()->default(0); //The storage limit of the user (In Bytes). A value of 0 means there is no limit
 
             $table->rememberToken();
             $table->timestamps(); //created_at e updated_at
