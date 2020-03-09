@@ -34,6 +34,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 //Resource Routes
 Route::resource('audit', 'AuditController');    //Access Logs and Change Logs
 Route::resource('backups', 'BackupController');
-Route::resource('packages', 'PackageController');
+Route::resource('packages', 'PackageController')->except(['index']);
 Route::resource('profiles', 'ProfileController');
 Route::resource('users', 'UserController');
+Route::resource('inbounds', 'InboundPackagesController')->only(['index']);
+Route::resource('outbounds', 'OutboundPackagesController')->only(['index']);
