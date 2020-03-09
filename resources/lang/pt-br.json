@@ -17,5 +17,15 @@
     "If you did not receive the email" : "Se você não recebeu o email",
     "click here to request another" : "clique aqui para solicitar outro",
 
-    "Welcome Back!":"Bem vindo de volta!"
+    "Welcome Back!":"Bem vindo de volta!",
+
+
+    "Go Home":"Voltar ao Início",
+    "Unauthorized":"Não Autorizado",
+    "Forbidden":"Proibido",
+    "Not Found":"Não Encontrado",
+    "Page Expired":"Página Expirada",
+    "Too Many Requests":"Muitas Requisições",
+    "Server Error":"Erro no Servidor",
+    "Service Unavailable":"Serviço Indisponível"
 }
