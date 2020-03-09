@@ -35,5 +35,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('audit', 'AuditController');    //Access Logs and Change Logs
 Route::resource('backups', 'BackupController');
 Route::resource('packages', 'PackageController');
-Route::resource('profiles', 'PhotoController');
-Route::resource('users', 'PhotoController');
+Route::resource('profiles', 'ProfileController');
+Route::resource('users', 'UserController');
