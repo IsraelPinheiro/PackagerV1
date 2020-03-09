@@ -30,3 +30,10 @@ Route::get('/', function (){
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//Resource Routes
+Route::resource('audit', 'AuditController');    //Access Logs and Change Logs
+Route::resource('backups', 'BackupController');
+Route::resource('packages', 'PackageController');
+Route::resource('profiles', 'PhotoController');
+Route::resource('users', 'PhotoController');
