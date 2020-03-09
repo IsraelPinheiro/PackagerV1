@@ -12,13 +12,22 @@ class CreateUsersTable extends Migration{
      */
     public function up(){
         Schema::create('users', function (Blueprint $table){
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->bigInteger('profile_id')->unsigned();
+            $table->boolean('active')->default(true);
+
+            $table->bigInteger('max_file_size')->unsigned()->default(0);    //Max size (In Bytes) of a given file. A value of 0 means there is no limit
+            $table->bigInteger('max_package_size')->unsigned()->default(0); //Max total size (In Bytes) of a given package. A value of 0 means there is no limit
+
             $table->rememberToken();
-            $table->timestamps();
+            $table->timestamps(); //created_at e updated_at
+            $table->softDeletes(); //deleted_at
+            $table->bigInteger('created_by')->unsigned();
+            $table->bigInteger('updated_by')->unsigned()->nullable()->default(null);
         });
     }
 
