@@ -13,7 +13,9 @@ class CreateAccessLogsTable extends Migration{
     public function up(){
         Schema::create('access_logs', function (Blueprint $table){
             $table->id();
-            $table->timestamps();
+            $table->bigInteger('user_id')->unsigned();
+            $table->ipAddress('origin');
+            $table->timestamp('accessed_at')->useCurrent();
         });
     }
 
