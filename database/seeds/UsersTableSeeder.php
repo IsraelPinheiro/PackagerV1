@@ -14,11 +14,11 @@ class UsersTableSeeder extends Seeder{
         
         User::create([
             'name' => 'Administrador',
-            'email' => 'admin@procaudit.com.br',
+            'email' => 'admin@packager.com.br',
             'password' => Hash::make('admin'),
             'profile_id' => 1,
             'created_by' => 1
         ]);
-        $this->command->info('Usuário Adminsitrador Criado');
+        $this->command->info('User Adminsitrador created');
     }
 }
