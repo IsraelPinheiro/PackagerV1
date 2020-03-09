@@ -9,10 +9,10 @@ class DatabaseSeeder extends Seeder{
      * @return void
      */
     public function run(){
-        $this->call(PerfisTableSeeder::class);
-        $this->call(UsuariosTableSeeder::class);
+        $this->call(ProfilesTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
         if(app()->environment('local')){
-            $this->call(FakeUsuariosTableSeeder::class);
+            $this->call(FakeUsersTableSeeder::class);
         }
         if(app()->environment('production')){
             
