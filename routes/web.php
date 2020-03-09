@@ -13,10 +13,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Auth::routes();
+if(env('ALLOW_REGISTRATION', false)) {
+    Auth::routes();
+} else{
+    Auth::routes([ 'register' => false ]);
+}
+
+Route::get('/', function (){
+    if(Auth::check()){
+        return redirect()->route('home');
+    }
+    else{
+        return redirect()->route('login');
+    }
+});
 
 Route::get('/home', 'HomeController@index')->name('home');
