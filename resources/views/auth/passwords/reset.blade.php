@@ -35,7 +35,7 @@
                                             <input type="hidden" name="token" value="{{ $token }}">
                                             <div class="form-group">
                                                 <label for="email" class="sr-only">{{ __('E-Mail Address') }}</label>
-                                                <input type="email" class="form-control form-control-user @error('email') is-invalid @enderror" id="email" name="email" placeholder="Enter Email Address..." required autocomplete="email" autofocus>
+                                                <input type="email" class="form-control form-control-user @error('email') is-invalid @enderror" id="email" name="email" placeholder="{{ __('E-Mail Address') }}" required autocomplete="email" autofocus>
                                                 @error('email')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>

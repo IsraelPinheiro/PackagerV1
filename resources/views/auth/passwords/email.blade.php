@@ -34,8 +34,8 @@
                                         <form class="user" method="POST" action="{{ route('password.email') }}">
                                             @csrf
                                             <div class="form-group">
-                                                <label for="email" class="sr-only">Endereço de Email</label>
-                                                <input type="email" class="form-control form-control-user @error('email') is-invalid @enderror" id="email" name="email" placeholder="Enter Email Address..." required autocomplete="email" autofocus>
+                                                <label for="email" class="sr-only">{{ __('E-Mail Address') }}</label>
+                                                <input type="email" class="form-control form-control-user @error('email') is-invalid @enderror" id="email" name="email" placeholder="{{ __('E-Mail Address') }}" required autocomplete="email" autofocus>
                                                 @error('email')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
