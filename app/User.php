@@ -35,4 +35,18 @@ class User extends Authenticatable{
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    //Relationships
+    public function lastAccess(){
+        return $this->hasOne('App\AccessLog')->latest();
+    }
+    public function profile(){
+        return $this->belongsTo('App\Profile');
+    }
+    public function accesses(){
+        return $this->hasMany('App\AccessLog');
+    }
+    public function logs(){
+        return $this->morphMany('App\ChangeLog', 'loggable');
+    }
 }
