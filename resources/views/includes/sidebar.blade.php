@@ -13,14 +13,14 @@
     <div class="sidebar-heading">Pacotes</div>
     <!-- Nav Item - Inbound Box -->
     <li class="nav-item">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="{{ route('inbounds.index') }}">
             <i class="fas fa-fw fa-sign-in-alt"></i>
             <span>Caixa de Entrada</span>
         </a>
     </li>
     <!-- Nav Item - Outbound Box -->
     <li class="nav-item">
-        <a class="nav-link pt-0" href="index.html">
+        <a class="nav-link pt-0" href="{{ route('outbounds.index') }}">
             <i class="fas fa-fw fa-sign-out-alt"></i>
             <span>Caixa de Saída</span>
         </a>
@@ -32,14 +32,14 @@
     <div class="sidebar-heading">Gestão</div>
     <!-- Nav Item - Reports -->
     <li class="nav-item">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="{{ route('reports.index') }}">
             <i class="fas fa-fw fa-file-contract"></i>
             <span>Relatórios</span>
         </a>
     </li>
     <!-- Nav Item - Dashboard -->
     <li class="nav-item">
-        <a class="nav-link pt-0" href="index.html">
+        <a class="nav-link pt-0" href="{{ route('dashboard.index') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
         </a>
@@ -50,7 +50,7 @@
 
     <!-- Nav Item - System Audit -->
     <li class="nav-item">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="{{ route('audit.index') }}">
             <i class="fas fa-fw fa-eye"></i>
             <span>Auditoria</span>
         </a>
@@ -62,12 +62,12 @@
             <i class="fas fa-fw fa-cog"></i>
             <span>Sistema</span>
         </a>
-        <div id="collapseSystem" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="collapseSystem" class="collapse" aria-labelledby="headingSystem" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="buttons.html">Usuários</a>
-                <a class="collapse-item" href="cards.html">Perfis de Acesso</a>
-                <a class="collapse-item" href="cards.html">Backups</a>
-                <a class="collapse-item" href="cards.html">Configurações Gerais</a>
+                <a class="collapse-item" href="{{ route('users.index') }}">Usuários</a>
+                <a class="collapse-item" href="{{ route('profiles.index') }}">Perfis de Acesso</a>
+                <a class="collapse-item" href="{{ route('backups.index') }}">Backups</a>
+                <a class="collapse-item" href="{{ route('config.index') }}">Configurações Gerais</a>
             </div>
         </div>
     </li>
