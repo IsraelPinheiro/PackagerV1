@@ -13,7 +13,12 @@ class CreateChangeLogsTable extends Migration{
     public function up(){
         Schema::create('change_logs', function (Blueprint $table){
             $table->id();
-            $table->timestamps();
+            $table->bigInteger('user_id')->unsigned();
+            $table->enum('loggable_type', ['user', 'profile', 'backup', 'package']);
+            $table->bigInteger('loggable_id')->unsigned();
+            $table->enum('target_action', ['create', 'read', 'update', 'delete']);
+            $table->json('old_data')->default(null);
+            $table->timestamp('created_at');
         });
     }
 
