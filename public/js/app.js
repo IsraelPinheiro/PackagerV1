@@ -102396,13 +102396,15 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-__webpack_require__(/*! ./sb-admin-2.js */ "./resources/js/sb-admin-2.js");
+__webpack_require__(/*! ./sb-admin-2 */ "./resources/js/sb-admin-2.js");
 
 __webpack_require__(/*! chart.js */ "./node_modules/chart.js/dist/Chart.js");
 
 __webpack_require__(/*! datatables */ "./node_modules/datatables/media/js/jquery.dataTables.js");
 
 __webpack_require__(/*! datatables.net-bs4 */ "./node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js");
+
+__webpack_require__(/*! ./table-init */ "./resources/js/table-init.js");
 
 __webpack_require__(/*! jquery-mask-plugin */ "./node_modules/jquery-mask-plugin/dist/jquery.mask.js");
 
@@ -102512,6 +102514,62 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
     e.preventDefault();
   });
 })(jQuery); // End of use strict
+
+/***/ }),
+
+/***/ "./resources/js/table-init.js":
+/*!************************************!*\
+  !*** ./resources/js/table-init.js ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(document).ready(function () {
+  //Inicialização DataTables
+  dataTable = $('.datatable').DataTable({
+    "pageLength": 10,
+    "language": {
+      "sEmptyTable": "Nenhum registro encontrado",
+      "sInfo": "Exibindo de _START_ à _END_ de _TOTAL_ registros",
+      "sInfoEmpty": "Exibindo 0 até 0 de 0 registros",
+      "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+      "sInfoPostFix": "",
+      "sInfoThousands": ".",
+      "sLengthMenu": "_MENU_ resultados por página",
+      "sLoadingRecords": "Carregando...",
+      "sProcessing": "Processando...",
+      "sZeroRecords": "Nenhum registro encontrado",
+      "sSearch": "Pesquisar",
+      "oPaginate": {
+        "sNext": "Próximo",
+        "sPrevious": "Anterior",
+        "sFirst": "Primeiro",
+        "sLast": "Último"
+      },
+      "oAria": {
+        "sSortAscending": ": Ordenar colunas de forma ascendente",
+        "sSortDescending": ": Ordenar colunas de forma descendente"
+      }
+    },
+    responsive: true,
+    pageResize: true,
+    columnDefs: [{
+      targets: "noorder",
+      orderable: false
+    }, {
+      targets: "noshow",
+      visible: false
+    }],
+    "initComplete": function initComplete(settings, json) {
+      $('.dataTables_filter').remove();
+      $('.dataTables_length').remove();
+    }
+  });
+  $('.datatable').DataTable();
+  $('#Search').keyup(function () {
+    dataTable.search($(this).val()).draw();
+  });
+});
 
 /***/ }),
 
