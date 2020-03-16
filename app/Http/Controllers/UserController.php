@@ -64,6 +64,8 @@ class UserController extends Controller{
             $user->password = Hash::make($request->Password);
             $user->created_by = Auth::user()->id;
             $user->save();
+            //TODO: Enable logging
+            /*
             if(env('TRACK_CHANGES', true)){
                 $log = new ChangeLog;
                 $log->user_id = Auth::user()->id;
@@ -72,7 +74,7 @@ class UserController extends Controller{
                 $log->target_action = 'create';
                 $log->old_data = null;
                 $log->save();
-            }
+            }*/            
             return response()->json(['message' => 'Usuário Criado'],200);
         }
         else{
