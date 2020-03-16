@@ -5,5 +5,10 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 class Profile extends Model{
-    //
+    public function users(){
+        return $this->hasMany('App\User');
+    }
+    public function logs(){
+        return $this->morphMany('App\ChangeLog', 'loggable');
+    }
 }
