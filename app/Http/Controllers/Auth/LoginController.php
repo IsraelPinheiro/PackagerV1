@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
+use App\AccessLog as AccessLog;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Validation\ValidationException;
 
-class LoginController extends Controller
-{
+class LoginController extends Controller{
     /*
     |--------------------------------------------------------------------------
     | Login Controller
@@ -33,8 +35,62 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct(){
         $this->middleware('guest')->except('logout');
+    }
+
+    /**
+     * Handle a login request to the application.
+     * Overrides the default login() funtion from \Illuminate\Foundation\Auth\AuthenticatesUsers
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function login(Request $request){
+        $this->validateLogin($request);
+        // If the class is using the ThrottlesLogins trait, we can automatically throttle
+        // the login attempts for this application. We'll key this by the username and
+        // the IP address of the client making these requests into this application.
+        if ($this->hasTooManyLoginAttempts($request)){
+            $this->fireLockoutEvent($request);
+            return $this->sendLockoutResponse($request);
+        }
+        if ($this->guard()->validate($this->credentials($request))){
+            $user = $this->guard()->getLastAttempted();
+            if($user->active){
+                if ($this->attemptLogin($request)) {
+                    return $this->sendLoginResponse($request);
+                }
+                $this->incrementLoginAttempts($request);
+                return $this->sendFailedLoginResponse($request);
+            }
+            else{
+                throw ValidationException::withMessages([
+                    $this->username() => [trans('auth.inactive')],
+                ]);
+            }
+        }
+
+        // If the login attempt was unsuccessful we will increment the number of attempts
+        // to login and redirect the user back to the login form. Of course, when this
+        // user surpasses their maximum number of attempts they will get locked out.
+        $this->incrementLoginAttempts($request);
+        return $this->sendFailedLoginResponse($request);
+    }
+
+    /**
+     * The user has been authenticated.
+     * Overrides the default authenticated() funtion from \Illuminate\Foundation\Auth\AuthenticatesUsers
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function authenticated(Request $request, $user){
+        $AccessLog = new AccessLog;
+        $AccessLog->user_id = $user->id;
+        $AccessLog->origin = $request->getClientIp();
+        $AccessLog->save();
     }
 }
