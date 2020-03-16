@@ -1,12 +1,4 @@
 @extends('layouts.app')
-
-@if(view()->exists('includes.toolbars.usuarios-toolbar'))
-    @section('bodyclass', 'hastoolbar')
-    @section('toolbar')
-	    @include('includes.toolbars.usuarios-toolbar')
-    @stop
-@endif
-
 @section('content')
 	<div class="page-header mb-3">
 		<h1 class="d-inline">Usuários</h1>
