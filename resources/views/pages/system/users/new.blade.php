@@ -7,8 +7,8 @@
 		<div class="row">
 			<div class="col-md-6">
 				<div class="form-group">
-					<label for="Nome">Nome</label>
-					<input name="Nome" type="text" class="form-control" required>
+					<label for="Name">Nome</label>
+					<input name="Name" type="text" class="form-control" required>
 				</div>
 			</div>
 			<div class="col-md-6">
@@ -22,8 +22,8 @@
 		<div class="row">
 			<div class="col-md-6">
                 <div class="form-group">
-                    <label for="Perfil">Perfil</label>
-                    <select name="Perfil" class="form-control">
+                    <label for="Profile">Perfil</label>
+                    <select name="Profile" class="form-control">
                         <option selected disabled>Selecione um Perfil</option>
                         @foreach ($profiles as $profile)
                             <option value="{{$profile->id}}">{{$profile->name}}</option>
