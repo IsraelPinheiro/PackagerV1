@@ -1,9 +1,5 @@
 @extends('layouts.app')
 
-@section('extra-scripts')
-	<script type="text/javascript" src="{{ asset('js/pages/usuarios.js') }}"></script>
-@stop
-
 @if(view()->exists('includes.toolbars.usuarios-toolbar'))
     @section('bodyclass', 'hastoolbar')
     @section('toolbar')
@@ -13,7 +9,12 @@
 
 @section('content')
 	<div class="page-header mb-3">
-		<h1>Usuários</h1>
+		<h1 class="d-inline">Usuários</h1>
+		@if(json_decode(Auth::user()->profile->acl_users)->create)
+			<button class="btn btn-primary btn-circle btn-users-add float-right d-inline" title="Novo" type="button">
+				<i class="fas fa-plus"></i>
+			</button>
+		@endif
 	</div>
 	<div class="container-fluid">
 		<table id="datatable" class="datatable table table-striped" cellspacing="0" width="100%">
@@ -53,12 +54,12 @@
 							<td class="toolbox">
 								<center>
 									@if($userPermissions->update)
-										<i data-id={{$user->id}} class="fas fa-edit fa-lg btn-edit pr-1" title="Editar"></i>
+										<i data-id={{$user->id}} class="fas fa-edit fa-lg btn-users-edit pr-1" title="Editar"></i>
                                     @else
-                                        <i data-id={{$user->id}} class="fas fa-eye fa-lg btn-show pr-1" title="Exibir"></i>
+                                        <i data-id={{$user->id}} class="fas fa-eye fa-lg btn-users-show pr-1" title="Exibir"></i>
 									@endif
 									@if($userPermissions->delete)
-										<i data-id={{$user->id}} class="fas fa-trash-alt fa-lg btn-del text-danger" title="Excluir"></i>
+										<i data-id={{$user->id}} class="fas fa-trash-alt fa-lg btn-users-del text-danger" title="Excluir"></i>
 									@endif
 								</center>
 							</td>
