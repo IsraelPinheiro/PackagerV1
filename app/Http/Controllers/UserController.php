@@ -91,7 +91,7 @@ class UserController extends Controller{
     public function show($id){
         $userPermissions = json_decode(Auth::user()->profile->acl_users);
         if($userPermissions->read){
-            $usuario = User::find($id);
+            $user = User::find($id);
             if($user){
                 return view('pages.system.users.show', compact('user'));
             }
@@ -209,6 +209,5 @@ class UserController extends Controller{
         else{
             abort(401);
         }
-
     }
 }
