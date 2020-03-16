@@ -11,7 +11,6 @@ class UsersTableSeeder extends Seeder{
      */
     public function run(){
         DB::table('users')->truncate();
-        
         User::create([
             'name' => 'Administrador',
             'email' => 'admin@packager.com.br',
