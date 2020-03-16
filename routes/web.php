@@ -39,3 +39,7 @@ Route::resource('profiles', 'ProfileController');
 Route::resource('users', 'UserController');
 Route::resource('inbounds', 'InboundPackagesController')->only(['index']);
 Route::resource('outbounds', 'OutboundPackagesController')->only(['index']);
+
+Route::resource('reports', 'OutboundPackagesController')->only(['index']);
+Route::resource('dashboard', 'OutboundPackagesController')->only(['index']);
+Route::resource('config', 'OutboundPackagesController')->only(['index']);
