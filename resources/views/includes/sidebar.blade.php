@@ -65,7 +65,7 @@
         <div id="collapseSystem" class="collapse" aria-labelledby="headingSystem" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="{{ route('users.index') }}">Usuários</a>
-                <a class="collapse-item" href="{{ route('profiles.index') }}">Perfis de Acesso</a>
+                <a class="collapse-item" href="{{ route('profiles.index') }}">Perfis de Usuário</a>
                 <a class="collapse-item" href="{{ route('backups.index') }}">Backups</a>
                 <a class="collapse-item" href="{{ route('config.index') }}">Configurações Gerais</a>
             </div>
