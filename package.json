@@ -17,7 +17,7 @@
         "cross-env": "^7.0",
         "datatables": "^1.10.18",
         "datatables.net-bs4": "^1.10.20",
-        "jquery": "^3.2",
+        "jquery": "^3.5",
         "jquery-mask-plugin": "^1.14.16",
         "jquery.easing": "^1.4.1",
         "laravel-mix": "^5.0.1",
