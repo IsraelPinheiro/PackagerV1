@@ -102837,7 +102837,9 @@ $(document).ready(function () {
       dataType: 'json',
       success: function success(data) {
         $('.modal').modal('hide');
-        swal("Sucesso", data.message, "success");
+        swal("Sucesso", data.message, "success").then(function (value) {
+          location.reload();
+        });
       },
       error: function error(data) {
         var errors = data.responseJSON.errors;
