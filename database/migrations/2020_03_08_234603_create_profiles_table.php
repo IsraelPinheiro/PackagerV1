@@ -23,8 +23,8 @@ class CreateProfilesTable extends Migration{
 
             //ACLs
             //Reports
-            $table->json('acl_dashboards_administrative');   //Read
-            $table->json('acl_dashboards_operational');   //Read
+            $table->json('acl_reports_administrative');   //Read
+            $table->json('acl_reports_operational');   //Read
             //Dashboards
             $table->json('acl_dashboards_management');   //Read
             $table->json('acl_dashboards_operational');   //Read
