@@ -35,6 +35,16 @@
 		</div>
 
         {{-- Storage Limits --}}
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="checkbox checkbox-primary pr-2">
+						<input name="limitsSwitch" id="limitsSwitch" type="checkbox" @if($user->override_storage_limits) checked @endif disabled hidden>
+						<label for="limitsSwitch">Sobrescrever Limites de Armazenamento</label>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div id="storageLimits" class="row @if(!$user->override_storage_limits) d-none @endif">
 			<div class="col-md-6">
 				<div class="form-group">
