@@ -47,7 +47,46 @@ class ProfileController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-        //TODO: Add store logic
+        $userPermissions = json_decode(Auth::user()->profile->acl_profiles);
+        if($userPermissions->create){
+            $request->validate([
+                'Name' => 'bail|required|min:3|string|unique:profiles,name,'.$profile->id,
+                'Description' => 'bail|nullable|string'
+            ]);
+            $profile = new Profile;
+            $profile->name = $request->Name;
+            $profile->description = $request->Description;
+            $profile->max_file_size = $request->max_file_size;
+            $profile->max_package_size = $request->max_package_size;
+            $profile->max_storage_size = $request->max_storage_size;
+            $profile->acl_reports_administrative = '{"read":'.($request->reports_administrative_read ? 'true':'false').'}';
+            $profile->acl_reports_operational = '{"read":'.($request->reports_operational_read ? 'true':'false').'}';
+            $profile->acl_dashboards_management = '{"read":'.($request->dashboards_management_read ? 'true':'false').'}';
+            $profile->acl_dashboards_operational = '{"read":'.($request->dashboards_operational_read ? 'true':'false').'}';
+            $profile->acl_audit_accessLogs = '{"read":'.($request->audit_access_read ? 'true':'false').', "download":'.($request->audit_access_download ? 'true':'false').'}';
+            $profile->acl_audit_changeLogs = '{"read":'.($request->audit_change_read ? 'true':'false').', "download":'.($request->audit_change_download ? 'true':'false').'}';
+            $profile->acl_users = '{"create":'.($request->users_create ? 'true':'false').', "read":'.($request->users_read ? 'true':'false').', "update":'.($request->users_update ? 'true':'false').', "delete":'.($request->users_delete ? 'true':'false').'}';
+			$profile->acl_profiles = '{"create":'.($request->profiles_create ? 'true':'false').', "read":'.($request->profiles_read ? 'true':'false').', "update":'.($request->profiles_update ? 'true':'false').', "delete":'.($request->profiles_delete ? 'true':'false').'}';
+            $profile->acl_backups = '{"create":'.($request->backups_create ? 'true':'false').', "read":'.($request->backups_read ? 'true':'false').', "restore":'.($request->backups_restore ? 'true':'false').', "delete":'.($request->backups_delete ? 'true':'false').'}';
+            $profile->acl_config = '{"read":'.($request->config_read ? 'true':'false').', "update":'.($request->config_update ? 'true':'false').'}';
+            $profile->created_by = Auth::user()->id;
+            $profile->save();
+            //TODO: Enable logging
+            /*
+            if(env('TRACK_CHANGES', true)){
+                $log = new ChangeLog;
+                $log->user_id = Auth::user()->id;
+                $log->loggable_type = 'profile';
+                $log->loggable_id = $profile->$id;
+                $log->target_action = 'create';
+                $log->old_data = null;
+                $log->save();
+            }*/            
+            return response()->json(['message' => 'Usuário Criado'],200);
+        }
+        else{
+            abort(401);
+        }
     }
 
     /**
@@ -102,7 +141,49 @@ class ProfileController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id){
-        //TODO: Add Update logic
+        $userPermissions = json_decode(Auth::user()->profile->acl_users);
+        if($userPermissions->update){
+            $profile = profile::find($id);
+            if($profile){
+                $request->validate([
+                    'Name' => 'bail|required|min:3|string|unique:profiles,name',
+                    'Description' => 'bail|nullable|string'
+                ]);
+                if(env('TRACK_CHANGES', true)){
+                    $log = new ChangeLog;
+                    $log->user_id = Auth::user()->id;
+                    $log->loggable_type = 'profile';
+                    $log->loggable_id = $id;
+                    $log->target_action = 'update';
+                    $log->old_data = $profile->toJson();
+                    $log->save();
+                }
+                $profile->name = $request->Name;
+                $profile->description = $request->Description;
+                $profile->max_file_size = $request->max_file_size;
+                $profile->max_package_size = $request->max_package_size;
+                $profile->max_storage_size = $request->max_storage_size;
+                $profile->acl_reports_administrative = '{"read":'.($request->reports_administrative_read ? 'true':'false').'}';
+                $profile->acl_reports_operational = '{"read":'.($request->reports_operational_read ? 'true':'false').'}';
+                $profile->acl_dashboards_management = '{"read":'.($request->dashboards_management_read ? 'true':'false').'}';
+                $profile->acl_dashboards_operational = '{"read":'.($request->dashboards_operational_read ? 'true':'false').'}';
+                $profile->acl_audit_accessLogs = '{"read":'.($request->audit_access_read ? 'true':'false').', "download":'.($request->audit_access_download ? 'true':'false').'}';
+                $profile->acl_audit_changeLogs = '{"read":'.($request->audit_change_read ? 'true':'false').', "download":'.($request->audit_change_download ? 'true':'false').'}';
+                $profile->acl_users = '{"create":'.($request->users_create ? 'true':'false').', "read":'.($request->users_read ? 'true':'false').', "update":'.($request->users_update ? 'true':'false').', "delete":'.($request->users_delete ? 'true':'false').'}';
+                $profile->acl_profiles = '{"create":'.($request->profiles_create ? 'true':'false').', "read":'.($request->profiles_read ? 'true':'false').', "update":'.($request->profiles_update ? 'true':'false').', "delete":'.($request->profiles_delete ? 'true':'false').'}';
+                $profile->acl_backups = '{"create":'.($request->backups_create ? 'true':'false').', "read":'.($request->backups_read ? 'true':'false').', "restore":'.($request->backups_restore ? 'true':'false').', "delete":'.($request->backups_delete ? 'true':'false').'}';
+                $profile->acl_config = '{"read":'.($request->config_read ? 'true':'false').', "update":'.($request->config_update ? 'true':'false').'}';
+                $user->updated_by = Auth::user()->id;
+                $user->save();
+                return response()->json(['level' => 'success','message' => 'Usuário Alterado'],200);
+            }
+            else{
+                return response()->json(['message' => 'Usuário não encontrado'],404);
+            }
+        }
+        else{
+            abort(401);
+        }
     }
 
     /**
@@ -116,7 +197,7 @@ class ProfileController extends Controller{
         if($userPermissions->delete){
             $profile = Profile::find($id);
             if($profile){
-                if($profile->usuarios->count()>0){
+                if($profile->users->count()>0){
                     return response()->json(['level' => 'error','message' => 'Este Perfíl possúi usuários atribuídos'],403);
                 }
                 else{
@@ -129,7 +210,7 @@ class ProfileController extends Controller{
                         $log->old_data = $profile->toJson();
                         $log->save();
                     }
-                    $perfil->delete();
+                    $profile->delete();
                     return response()->json(['level' => 'success','message' => 'Perfil de Usuário Excluído'],200);
                 }
             }
