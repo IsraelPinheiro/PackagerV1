@@ -102923,6 +102923,13 @@ $(document).ready(function () {
       $("body").append(data);
       $(".modal").modal("toggle");
     });
+  }); //Button Show Users List
+
+  $(document).on("click", ".btn-profile-users-show", function (event) {
+    $.get("/profiles/" + $(event.target).data("id") + "/users", function (data) {
+      $("body").append(data);
+      $(".modal").modal("toggle");
+    });
   }); //Button Store
 
   $(document).on("click", ".btn-profiles-store", function () {

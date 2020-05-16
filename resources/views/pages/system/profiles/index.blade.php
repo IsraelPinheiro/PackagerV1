@@ -29,6 +29,7 @@
 						@if($userPermissions->update || $userPermissions->delete)
 							<td class="toolbox">
 								<center>
+									<i data-id={{$profile->id}} class="fas fa-list fa-lg btn-profile-users-show pr-1" title="Listar Usuarios"></i>
 									@if($userPermissions->update)
 										<i data-id={{$profile->id}} class="fas fa-edit fa-lg btn-profiles-edit pr-1" title="Editar"></i>
                                     @else
