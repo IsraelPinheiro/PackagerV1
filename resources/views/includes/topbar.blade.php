@@ -48,13 +48,21 @@
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item btn-options-profile" href="#">
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Perfil
+                    Meus Dados
                 </a>
-                <a class="dropdown-item" href="#">
-                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Configurações
+                <a class="dropdown-item btn-options-password" href="#">
+                    <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Alterar Senha
+                </a>
+                 <a class="dropdown-item btn-options-about" href="#">
+                    <i class="fas fa-info fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Sobre
+                </a>
+                <a class="dropdown-item btn-options-help" href="#">
+                    <i class="fas fa-question fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Ajuda
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
