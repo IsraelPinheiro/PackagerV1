@@ -17,12 +17,18 @@ class ProfilesTableSeeder extends Seeder{
             'name' => 'Administrador',
             'description' => 'Perfil padrão de administrador do sistema',
             
+            'acl_audit_accessLogs' =>    '{"read":true, "download":true}',
+            'acl_audit_changeLogs' =>    '{"read":true, "download":true, "restore":true}',
+            'acl_reports_administrative'=> '{"read":true}',
+            'acl_reports_operational'=> '{"read":true}',
+            'acl_dashboards_management' => '{"read":true}',
+            'acl_dashboards_operational'=> '{"read":true}',
+            'acl_audit_accessLogs' => '{"read":true, "download":true}',
+            'acl_audit_changeLogs' => '{"read":true, "download":true}',
             'acl_users' => '{"create":true, "read":true, "update":true, "delete":true}',
             'acl_profiles' => '{"create":true, "read":true, "update":true, "delete":true}',
             'acl_backups' => '{"create":true, "read":true, "restore":true, "delete":true}',
-            'acl_backups_schedules' =>   '{"create":true, "read":true, "update":true, "delete":true}',
-            'acl_audit_accessLogs' =>    '{"read":true, "download":true}',
-            'acl_audit_changeLogs' =>    '{"read":true, "download":true, "restore":true}',
+            'acl_config' => '{"read":true, "update":true}',
 
             'created_by' => 1
         ]);
