@@ -61,6 +61,15 @@ class UserController extends Controller{
             $user->name = $request->Name;
             $user->email = $request->Email;
             $user->profile_id = $request->Profile;
+            if($request->limitsSwitch){
+                $user->override_storage_limits = true;
+                $user->max_file_size = $request->max_file_size;
+                $user->max_package_size = $request->max_package_size;
+                $user->max_storage_size = $request->max_storage_size;
+            }
+            else{
+                $user->override_storage_limits = false;
+            }
             $user->password = Hash::make($request->Password);
             $user->created_by = Auth::user()->id;
             $user->save();
@@ -157,6 +166,15 @@ class UserController extends Controller{
                 $user->email = $request->Email;
                 $user->profile_id = $request->Profile;
                 $user->active = $request->Status;
+                if($request->limitsSwitch){
+                    $user->override_storage_limits = true;
+                    $user->max_file_size = $request->max_file_size;
+                    $user->max_package_size = $request->max_package_size;
+                    $user->max_storage_size = $request->max_storage_size;
+                }
+                else{
+                    $user->override_storage_limits = false;
+                }
                 if($request->Password!=''){
                     $user->password = Hash::make($request->Password);
                 }
