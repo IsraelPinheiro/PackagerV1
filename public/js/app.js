@@ -102820,40 +102820,40 @@ $(document).ready(function () {
 /***/ (function(module, exports) {
 
 $(document).ready(function () {
-  //Button Ajuda
-  $(".btn-ajuda").click(function () {
-    $.get("/ajuda", function (data) {
+  //Button Options User Config
+  $(".btn-options-config").click(function () {
+    $.get("/options/config", function (data) {
       $("body").append(data);
       $(".modal").modal("toggle");
     });
-  }); //Button Política de Privacidade
+  }); //Button Ajuda
 
-  $(".btn-privacidade").click(function () {
-    $.get("/privacidade", function (data) {
+  $(".btn-options-help").click(function () {
+    $.get("/options/help", function (data) {
       $("body").append(data);
       $(".modal").modal("toggle");
     });
   }); //Button Sobre
 
-  $(".btn-sobre").click(function () {
-    $.get("/sobre", function (data) {
+  $(".btn-options-about").click(function () {
+    $.get("/options/about", function (data) {
       $("body").append(data);
       $(".modal").modal("toggle");
     });
   }); //Alterar Senha - Exibir Painel
 
-  $(".btn-senha").click(function () {
-    $.get("/opcoes/senha", function (data) {
+  $(".btn-options-password").click(function () {
+    $.get("/options/password", function (data) {
       $("body").append(data);
       $(".modal").modal("toggle");
     });
   }); //Alterar Senha - Salvar
 
-  $(document).on("click", ".btn-update-senha", function () {
+  $(document).on("click", ".btn-update-password", function () {
     var formData = $("#FormModal").serialize();
     $.ajax({
       type: "POST",
-      url: "opcoes/senha",
+      url: "options/password",
       data: formData,
       dataType: 'json',
       success: function success(data) {
