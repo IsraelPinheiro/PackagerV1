@@ -103086,6 +103086,13 @@ $(document).ready(function () {
       }
     });
   });
+  $(document).on("change", "#limitsSwitch", function (event) {
+    if ($("#limitsSwitch").prop('checked')) {
+      $("#storageLimits").removeClass("d-none");
+    } else {
+      $("#storageLimits").addClass("d-none");
+    }
+  });
 });
 
 /***/ }),
