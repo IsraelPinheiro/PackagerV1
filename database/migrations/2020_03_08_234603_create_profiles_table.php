@@ -22,14 +22,22 @@ class CreateProfilesTable extends Migration{
             $table->bigInteger('max_storage_size')->unsigned()->default(0); //The storage limit of the user (In Bytes). A value of 0 means there is no limit
 
             //ACLs
-            //Access Management
+            //Reports
+            $table->json('acl_dashboards_administrative');   //Read
+            $table->json('acl_dashboards_operational');   //Read
+            //Dashboards
+            $table->json('acl_dashboards_management');   //Read
+            $table->json('acl_dashboards_operational');   //Read
+            //Audit
+            $table->json('acl_audit_accessLogs');   //Read | Download
+            $table->json('acl_audit_changeLogs');   //Read | Download
+            //System
             $table->json('acl_users');      //Create | Read | Update | Delete
             $table->json('acl_profiles');   //Create | Read | Update | Delete
             //Security and Audit
-            $table->json('acl_backups');            //Create | Read | Restore | Delete
-            $table->json('acl_backups_schedules');  //Create | Read | Update | Delete
-            $table->json('acl_audit_accessLogs');   //Read | Download
-            $table->json('acl_audit_changeLogs');   //Read | Download | Restore
+            $table->json('acl_backups');    //Create | Read | Restore | Delete
+            $table->json('acl_config');    //Read | Update
+            
             //TODO: Add remaining ACL Rules
 
             $table->timestamps();   //created_at e updated_at
