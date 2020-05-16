@@ -16,7 +16,11 @@ $(document).ready(function(){
 			dataType: 'json',
 			success:function(data){
 				$('.modal').modal('hide');
-				swal("Sucesso", data.message, "success")
+				swal("Sucesso", data.message, "success").then(
+					(value) => {
+						location.reload();
+					}
+				);
 			},
 			error: function(data){
 				var errors = data.responseJSON.errors;
@@ -24,7 +28,6 @@ $(document).ready(function(){
 			}
 		});
     });
-
     //Button Options Help
     $(".btn-options-help").click(function(){
         $.get("/options/help", function(data){
