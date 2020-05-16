@@ -7,14 +7,14 @@
 		<div class="row">
 			<div class="col-md-6">
 				<div class="form-group">
-					<label for="password">Nova Senha</label>
-					<input name="password" id="password" type="password" class="form-control" required>
+					<label for="Password">Nova Senha</label>
+					<input name="Password" id="Password" type="password" class="form-control" required>
 				</div>
 			</div>
 			<div class="col-md-6">
 				<div class="form-group">
-					<label for="password_confirmation">Confirmar Senha</label>
-					<input name="password_confirmation" id="password_confirmation" type="password" class="form-control" required>
+					<label for="Password_confirmation">Confirmar Senha</label>
+					<input name="Password_confirmation" id="Password_confirmation" type="password" class="form-control" required>
 				</div>
 			</div>
 		</div>

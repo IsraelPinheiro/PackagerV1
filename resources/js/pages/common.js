@@ -1,33 +1,52 @@
 $(document).ready(function(){
 	//Button Options User Config
-    $(".btn-options-config").click(function(){
-        $.get("/options/config", function(data){
-            $("body").append(data);
-            $(".modal").modal("toggle");
-        });
+	$(".btn-options-config").click(function(){
+		$.get("/options/config", function(data){
+			$("body").append(data);
+			$(".modal").modal("toggle");
+		});
     });
-    //Button Ajuda
+    //Update User Config
+    $(document).on("click", ".btn-update-config",function(){
+        var formData = $("#FormModal").serialize();
+		$.ajax({
+			type:"POST",
+			url:"options/config",
+			data: formData,
+			dataType: 'json',
+			success:function(data){
+				$('.modal').modal('hide');
+				swal("Sucesso", data.message, "success")
+			},
+			error: function(data){
+				var errors = data.responseJSON.errors;
+				swal("Erro", errors[Object.keys(errors)[0]][0], "error")
+			}
+		});
+    });
+
+    //Button Options Help
     $(".btn-options-help").click(function(){
         $.get("/options/help", function(data){
             $("body").append(data);
             $(".modal").modal("toggle");
         });
     });
-	//Button Sobre
+	//Button Options About
 	$(".btn-options-about").click(function(){
 		$.get("/options/about", function(data){
 			$("body").append(data);
 			$(".modal").modal("toggle");
 		});
     });
-	//Alterar Senha - Exibir Painel
+	//Button Options Change Password - Show Modal
 	$(".btn-options-password").click(function(){
 		$.get("/options/password", function(data){
 			$("body").append(data);
 			$(".modal").modal("toggle");
 		});
     });
-    //Alterar Senha - Salvar
+    //Button Options Change Password - Update
     $(document).on("click", ".btn-update-password",function(){
         var formData = $("#FormModal").serialize();
 		$.ajax({
@@ -35,17 +54,13 @@ $(document).ready(function(){
 			url:"options/password",
 			data: formData,
 			dataType: 'json',
-			success: function(data){
-                $("body").append(data);
-                $('.modal').modal('hide');
-				alertify.notify(data.message, 'success', 2);
+			success:function(data){
+				$('.modal').modal('hide');
+				swal("Sucesso", data.message, "success")
 			},
 			error: function(data){
-                var errors = data.responseJSON.errors;
-                //alertify.notify(errors[Object.keys(errors)[0]][0], 'error', 2);
-                errors[Object.keys(errors)[0]].forEach(function(entry) {
-                    alertify.notify(entry, 'error', 2);
-                });
+				var errors = data.responseJSON.errors;
+				swal("Erro", errors[Object.keys(errors)[0]][0], "error")
 			}
 		});
     });

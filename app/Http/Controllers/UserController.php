@@ -245,10 +245,10 @@ class UserController extends Controller{
      */
     public function updatePassword(Request $request){
         $request->validate([
-            'password' => 'bail|required|min:6|confirmed|regex:/^.*(?=.{6,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\X])(?=.*[!@#$%&*]).*$/'
+            'Password' => 'bail|required|min:6|confirmed|regex:/^.*(?=.{6,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\X])(?=.*[!@#$%&*]).*$/'
         ]);
         $user = User::find(Auth::user()->id);
-        $user->password = Hash::make($request->password);
+        $user->password = Hash::make($request->Password);
         $user->save();
         return response()->json(['message' => 'Senha Alterada com Sucesso'],200);
     }
