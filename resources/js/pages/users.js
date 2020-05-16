@@ -60,7 +60,7 @@ $(document).ready(function(){
 				$('.modal').modal('hide');
 				swal("Sucesso", data.message, "success").then(
 					(value) => {
-						location.reload();
+						location.reload()
 					}
 				);
 			},
@@ -89,7 +89,7 @@ $(document).ready(function(){
 					},
 					data: {_method: 'delete'},
 					success:function(data){
-						$(event.target).closest("tr").remove();
+						$(event.target).closest("tr").remove()
 						swal("Sucesso", data.message, "success")
 					},
 					error:function(data){
@@ -99,5 +99,14 @@ $(document).ready(function(){
 				});
 			}
 		});
-    });
+	});
+	
+	$(document).on("change", "#limitsSwitch",function(event){
+		if($("#limitsSwitch").prop('checked')){
+			$("#storageLimits").removeClass("d-none")
+		}
+		else{
+			$("#storageLimits").addClass("d-none")
+		}
+	});
 });
