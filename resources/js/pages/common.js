@@ -1,7 +1,4 @@
 $(document).ready(function(){
-
-
-
 	//Button Options User Config
     $(".btn-options-config").click(function(){
         $.get("/options/config", function(data){
@@ -9,7 +6,6 @@ $(document).ready(function(){
             $(".modal").modal("toggle");
         });
     });
-
     //Button Ajuda
     $(".btn-options-help").click(function(){
         $.get("/options/help", function(data){
@@ -17,7 +13,6 @@ $(document).ready(function(){
             $(".modal").modal("toggle");
         });
     });
-
 	//Button Sobre
 	$(".btn-options-about").click(function(){
 		$.get("/options/about", function(data){
@@ -25,7 +20,6 @@ $(document).ready(function(){
 			$(".modal").modal("toggle");
 		});
     });
-    
 	//Alterar Senha - Exibir Painel
 	$(".btn-options-password").click(function(){
 		$.get("/options/password", function(data){
@@ -33,7 +27,6 @@ $(document).ready(function(){
 			$(".modal").modal("toggle");
 		});
     });
-
     //Alterar Senha - Salvar
     $(document).on("click", ".btn-update-password",function(){
         var formData = $("#FormModal").serialize();
@@ -56,7 +49,6 @@ $(document).ready(function(){
 			}
 		});
     });
-
 	//Close Modal
 	$(document).on("hidden.bs.modal", ".modal", function(){
 		$(this).remove();
