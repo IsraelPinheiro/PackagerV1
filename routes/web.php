@@ -29,17 +29,17 @@ Route::get('/', function (){
     }
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
 //Resource Routes
-Route::resource('audit', 'AuditController');    //Access Logs and Change Logs
-Route::resource('backups', 'BackupController');
-Route::resource('packages', 'PackageController')->except(['index']);
-Route::resource('profiles', 'ProfileController');
-Route::resource('users', 'UserController');
-Route::resource('inbounds', 'InboundPackagesController')->only(['index']);
-Route::resource('outbounds', 'OutboundPackagesController')->only(['index']);
+Route::resource('audit', 'AuditController')->middleware('auth');    //Access Logs and Change Logs
+Route::resource('backups', 'BackupController')->middleware('auth');
+Route::resource('packages', 'PackageController')->except(['index'])->middleware('auth');
+Route::resource('profiles', 'ProfileController')->middleware('auth');
+Route::resource('users', 'UserController')->middleware('auth');
+Route::resource('inbounds', 'InboundPackagesController')->only(['index'])->middleware('auth');
+Route::resource('outbounds', 'OutboundPackagesController')->only(['index'])->middleware('auth');
 
-Route::resource('reports', 'OutboundPackagesController')->only(['index']);
-Route::resource('dashboard', 'OutboundPackagesController')->only(['index']);
-Route::resource('config', 'OutboundPackagesController')->only(['index']);
+Route::resource('reports', 'OutboundPackagesController')->only(['index'])->middleware('auth');
+Route::resource('dashboard', 'OutboundPackagesController')->only(['index'])->middleware('auth');
+Route::resource('config', 'OutboundPackagesController')->only(['index'])->middleware('auth');
