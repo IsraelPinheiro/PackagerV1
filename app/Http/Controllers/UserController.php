@@ -229,6 +229,48 @@ class UserController extends Controller{
     }
 
     /**
+     * Shows the prompt for the users to update their info.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function promptConfig(){
+        $user = User::find(Auth::user()->id);
+        if($user){
+            return view('pages.options.config', compact('user'));
+        }
+        else{
+            return response()->json(['message' => 'Usuário não encontrado'],404);
+        }
+    }
+
+    /**
+     * Update the info of the currently logged in user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateConfig(Request $request){
+        $request->validate([
+            'Name' => 'bail|required|min:3|string',
+            'Email' => 'bail|required|email|unique:users,email,'.Auth::user()->id,
+        ]);
+        $user = User::find(Auth::user()->id);
+        if(env('TRACK_CHANGES', true)){
+            $log = new ChangeLog;
+            $log->user_id = Auth::user()->id;
+            $log->loggable_type = 'user';
+            $log->loggable_id = Auth::user()->id;
+            $log->target_action = 'update';
+            $log->old_data = $user->toJson();
+            $log->save();
+        }
+        $user->name = $request->Name;
+        $user->email = $request->Email;
+        $user->save();
+        return response()->json(['message' => 'Dados Alterados com Sucesso'],200);
+    }
+
+    /**
      * Shows the prompt for password change by the user.
      *
      * @return \Illuminate\Http\Response
@@ -248,6 +290,15 @@ class UserController extends Controller{
             'Password' => 'bail|required|min:6|confirmed|regex:/^.*(?=.{6,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\X])(?=.*[!@#$%&*]).*$/'
         ]);
         $user = User::find(Auth::user()->id);
+        if(env('TRACK_CHANGES', true)){
+            $log = new ChangeLog;
+            $log->user_id = Auth::user()->id;
+            $log->loggable_type = 'user';
+            $log->loggable_id = Auth::user()->id;
+            $log->target_action = 'update';
+            $log->old_data = $user->toJson();
+            $log->save();
+        }
         $user->password = Hash::make($request->Password);
         $user->save();
         return response()->json(['message' => 'Senha Alterada com Sucesso'],200);
