@@ -50,7 +50,7 @@ class ProfileController extends Controller{
         $userPermissions = json_decode(Auth::user()->profile->acl_profiles);
         if($userPermissions->create){
             $request->validate([
-                'Name' => 'bail|required|min:3|string|unique:profiles,name,'.$profile->id,
+                'Name' => 'bail|required|min:3|string|unique:profiles,name',
                 'Description' => 'bail|nullable|string'
             ]);
             $profile = new Profile;
@@ -146,7 +146,7 @@ class ProfileController extends Controller{
             $profile = profile::find($id);
             if($profile){
                 $request->validate([
-                    'Name' => 'bail|required|min:3|string|unique:profiles,name',
+                    'Name' => 'bail|required|min:3|string|unique:profiles,name,'.$profile->id,
                     'Description' => 'bail|nullable|string'
                 ]);
                 if(env('TRACK_CHANGES', true)){
@@ -173,9 +173,9 @@ class ProfileController extends Controller{
                 $profile->acl_profiles = '{"create":'.($request->profiles_create ? 'true':'false').', "read":'.($request->profiles_read ? 'true':'false').', "update":'.($request->profiles_update ? 'true':'false').', "delete":'.($request->profiles_delete ? 'true':'false').'}';
                 $profile->acl_backups = '{"create":'.($request->backups_create ? 'true':'false').', "read":'.($request->backups_read ? 'true':'false').', "restore":'.($request->backups_restore ? 'true':'false').', "delete":'.($request->backups_delete ? 'true':'false').'}';
                 $profile->acl_config = '{"read":'.($request->config_read ? 'true':'false').', "update":'.($request->config_update ? 'true':'false').'}';
-                $user->updated_by = Auth::user()->id;
-                $user->save();
-                return response()->json(['level' => 'success','message' => 'Usuário Alterado'],200);
+                $profile->updated_by = Auth::user()->id;
+                $profile->save();
+                return response()->json(['level' => 'success','message' => 'Perfil Alterado com Sucesso'],200);
             }
             else{
                 return response()->json(['message' => 'Usuário não encontrado'],404);
@@ -213,6 +213,23 @@ class ProfileController extends Controller{
                     $profile->delete();
                     return response()->json(['level' => 'success','message' => 'Perfil de Usuário Excluído'],200);
                 }
+            }
+            else{
+                return response()->json(['message' => 'Perfil de Usuário não encontrado'],404);
+            }
+        }
+        else{
+            abort(401);
+        }
+    }
+
+
+    public function listUsers($id){
+        $userPermissions = json_decode(Auth::user()->profile->acl_profiles);
+        if($userPermissions->read){
+            $profile = Profile::find($id);
+            if($profile){
+                return view('pages.system.profiles.users', compact('profile'));
             }
             else{
                 return response()->json(['message' => 'Perfil de Usuário não encontrado'],404);
