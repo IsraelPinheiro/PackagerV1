@@ -227,4 +227,29 @@ class UserController extends Controller{
             abort(401);
         }
     }
+
+    /**
+     * Shows the prompt for password change by the user.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function promptPassword(){
+        return view('pages.options.password');
+    }
+
+    /**
+     * Update the password of the currently logged in user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updatePassword(Request $request){
+        $request->validate([
+            'password' => 'bail|required|min:6|confirmed|regex:/^.*(?=.{6,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\X])(?=.*[!@#$%&*]).*$/'
+        ]);
+        $user = User::find(Auth::user()->id);
+        $user->password = Hash::make($request->password);
+        $user->save();
+        return response()->json(['message' => 'Senha Alterada com Sucesso'],200);
+    }
 }
