@@ -60,12 +60,12 @@
 				<div class="col-md-12">
 					<div class="form-group form-inline">
 						<div class="checkbox checkbox-primary pr-2">
-							<input name="relatorios_operacionais_read" id="relatorios_operacionais_read" type="checkbox" hidden>
-							<label for="relatorios_operacionais_read">Relatórios Operacionais</label>
+							<input name="reports_operational_read" id="reports_operational_read" type="checkbox" hidden>
+							<label for="reports_operational_read">Relatórios Operacionais</label>
 						</div>
 						<div class="checkbox checkbox-primary pr-2">
-							<input name="relatorios_administrativos_read" id="relatorios_administrativos_read" type="checkbox" hidden>
-							<label for="relatorios_administrativos_read">Relatórios Administrativos</label>
+							<input name="reports_administrative_read" id="reports_administrative_read" type="checkbox" hidden>
+							<label for="reports_administrative_read">Relatórios Administrativos</label>
 						</div>
 					</div>
 				</div>
@@ -85,12 +85,12 @@
 				<div class="col-md-12">
 					<div class="form-group form-inline">
 						<div class="checkbox checkbox-primary pr-2">
-							<input name="dashboards_gerencial_read" id="dashboards_gerencial_read" type="checkbox" hidden>
-							<label for="dashboards_gerencial_read">Dashboard Gerencial</label>
+							<input name="dashboards_management_read" id="dashboards_management_read" type="checkbox" hidden>
+							<label for="dashboards_management_read">Dashboard Gerencial</label>
 						</div>
 						<div class="checkbox checkbox-primary pr-2">
-							<input name="dashboards_operacional_read" id="dashboards_operacional_read" type="checkbox" hidden>
-							<label for="dashboards_operacional_read">Dashboard Operacional</label>
+							<input name="dashboards_operationa_read" id="dashboards_operationa_read" type="checkbox" hidden>
+							<label for="dashboards_operationa_read">Dashboard Operacional</label>
 						</div>
 					</div>
 				</div>
