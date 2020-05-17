@@ -49,4 +49,10 @@ class User extends Authenticatable{
     public function logs(){
         return $this->morphMany('App\ChangeLog', 'loggable');
     }
+    public function reveived(){
+        return $this->hasMany('App\Package', 'recipient_id');
+    }
+    public function sent(){
+        return $this->hasMany('App\Package', 'sender_id');
+    }
 }
