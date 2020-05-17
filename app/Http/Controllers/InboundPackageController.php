@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
+use App\Package;
+use Carbon\Carbon;
 
 class InboundPackageController extends Controller{
     /**
@@ -11,7 +14,8 @@ class InboundPackageController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        //
+        $packages = Auth::user()->received;
+        return view('pages.packages.inbound.index',compact('packages'));
     }
 
     /**
