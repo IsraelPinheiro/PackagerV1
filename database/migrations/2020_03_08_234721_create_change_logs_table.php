@@ -14,7 +14,7 @@ class CreateChangeLogsTable extends Migration{
         Schema::create('change_logs', function (Blueprint $table){
             $table->id();
             $table->bigInteger('user_id')->unsigned();
-            $table->enum('loggable_type', ['user', 'profile', 'backup', 'package']);
+            $table->enum('loggable_type', ['User', 'Profile', 'Backup', 'Package']);
             $table->bigInteger('loggable_id')->unsigned();
             $table->enum('target_action', ['create', 'read', 'update', 'delete']);
             $table->json('old_data')->default(null);
