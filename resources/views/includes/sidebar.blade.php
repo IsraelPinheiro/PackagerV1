@@ -22,7 +22,7 @@
     <li class="nav-item">
         <a class="nav-link pt-0" href="{{ route('outbounds.index') }}">
             <i class="fas fa-fw fa-sign-out-alt"></i>
-            <span>Caixa de Saída</span>
+            <span>Itens Enviados</span>
         </a>
     </li>
 
