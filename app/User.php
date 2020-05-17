@@ -6,6 +6,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use Carbon\Carbon;
+
 class User extends Authenticatable{
     use Notifiable;
 
@@ -49,8 +51,8 @@ class User extends Authenticatable{
     public function logs(){
         return $this->morphMany('App\ChangeLog', 'loggable');
     }
-    public function reveived(){
-        return $this->hasMany('App\Package', 'recipient_id')->whereDate('expires_at', '<=', Carbon::today()->toDateString())->orWhere('expires_at')->orWhereNull('expires_at');
+    public function received(){
+        return $this->hasMany('App\Package', 'recipient_id')->where('expires_at', '>=', Carbon::today())->orWhereNull('expires_at');
     }
     public function sent(){
         return $this->hasMany('App\Package', 'sender_id');

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
+use App\Package;
 
 class OutboundPackageController extends Controller{
     /**
@@ -11,7 +13,8 @@ class OutboundPackageController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        //
+        $packages = Auth::user()->sent;
+        return view('pages.packages.outbound.index',compact('packages'));
     }
 
     /**
