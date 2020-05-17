@@ -39,8 +39,8 @@ Route::resource('packages', 'PackageController')->except(['index'])->middleware(
 Route::resource('profiles', 'ProfileController')->middleware('auth');
 Route::get('/profiles/{id}/users','ProfileController@listUsers')->name("profiles.users")->middleware('auth');
 Route::resource('users', 'UserController')->middleware('auth');
-Route::resource('inbounds', 'InboundPackageController')->only(['index'])->middleware('auth');
-Route::resource('outbounds', 'OutboundPackageController')->only(['index'])->middleware('auth');
+Route::resource('inbounds', 'InboundPackagesController')->only(['index'])->middleware('auth');
+Route::resource('outbounds', 'OutboundPackagesController')->only(['index'])->middleware('auth');
 Route::resource('reports', 'ReportController@index')->only(['index'])->middleware('auth');
 Route::get('/reports/{type?}/{report?}', 'ReportController@index')->where("type","operational|administrative")->middleware('auth');
 Route::get('/dashboards/{type}', 'DashboardController@index')->where("type","management|operational")->name('dashboards')->middleware('auth');
