@@ -13,6 +13,15 @@ class CreatePackagesTable extends Migration{
     public function up(){
         Schema::create('packages', function (Blueprint $table){
             $table->id();
+            $table->string('title');
+            $table->text('description')->nullable()->default(null);
+            $table->string('key', 32)->unique();
+            $table->string('password')->nullable()->default(null);
+            $table->bigInteger('sender_id')->unsigned();
+            $table->bigInteger('recipient_id')->unsigned();
+            $table->boolean('new')->default(true);
+            $table->boolean('directLink')->default(false);
+            $table->timestamp('expires_at')->nullable()->default(NULL);
             $table->timestamps();
         });
     }
