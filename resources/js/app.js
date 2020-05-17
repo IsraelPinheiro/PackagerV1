@@ -6,6 +6,7 @@ require('datatables')
 require('datatables.net-bs4')
 require('jquery-mask-plugin')
 require('jquery.easing')
+require('chart.js')
 
 //Datatables Initialisation
 require('./datatables.init')
