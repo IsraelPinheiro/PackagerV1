@@ -95,10 +95,10 @@
             <div id="collapseAudit" class="collapse" aria-labelledby="headingSystem" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     @if($acl_audit_accessLogs->read)
-                        <a class="collapse-item" href="{{ route('audit',['type' => 'access']) }}">Acessos</a>
+                        <a class="collapse-item" href="{{ route('audit.index',['type' => 'access']) }}">Acessos</a>
                     @endif
                     @if($acl_audit_changeLogs->read)
-                        <a class="collapse-item" href="{{ route('audit',['type' => 'change']) }}">Mudanças</a>
+                        <a class="collapse-item" href="{{ route('audit.index',['type' => 'change']) }}">Mudanças</a>
                     @endif
                 </div>
             </div>
