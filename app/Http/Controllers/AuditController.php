@@ -4,14 +4,38 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Auth;
+use Response;
+use App\AccessLog;
+use App\ChangeLog;
+
 class AuditController extends Controller{
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(){
-        //
+    public function index($type){
+        if($type=="access"){
+            $userPermissions = json_decode(Auth::user()->profile->acl_audit_accessLogs);
+            if($userPermissions->read){
+                $audits = AccessLog::all();
+                return view('pages.audit.access',compact('userPermissions','audits'));
+            }
+            else{
+                abort(401);
+            }
+        }
+        elseif($type=="change"){
+            $userPermissions = json_decode(Auth::user()->profile->acl_audit_changeLogs);
+            if($userPermissions->read){
+                $audits = ChangeLog::all();
+                return view('pages.audit.change',compact('userPermissions','audits'));
+            }
+            else{
+                abort(401);
+            }
+        }
     }
 
     /**
@@ -19,58 +43,46 @@ class AuditController extends Controller{
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(){
-        //
-    }
+    public function download($type){
+        if($type=="access"){
+            $userPermissions = json_decode(Auth::user()->profile->acl_audit_accessLogs);
+            if($userPermissions->download){
+                //TODO: Format Export
+                $table = AccessLog::all();
+                $output='';
+                foreach ($table as $row) {
+                    $output .=  implode(";",$row->toArray());
+                }
+                $headers = array(
+                    'Content-Type' => 'text/csv',
+                    'Content-Disposition' => 'attachment; filename="acessos.csv"',
+                );
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request){
-        //
-    }
+                return Response::make(rtrim($output, "\n"), 200, $headers);
+            }
+            else{
+                abort(401);
+            }
+        }
+        elseif($type=="change"){
+            $userPermissions = json_decode(Auth::user()->profile->acl_audit_changeLogs);
+            if($userPermissions->download){
+               //TODO: Format Export
+               $table = AccessLog::all();
+               $output='';
+               foreach ($table as $row) {
+                   $output .=  implode(",",$row->toArray());
+               }
+               $headers = array(
+                   'Content-Type' => 'text/csv',
+                   'Content-Disposition' => 'attachment; filename="acessos.csv"',
+               );
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id){
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id){
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id){
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id){
-        //
+               return Response::make(rtrim($output, "\n"), 200, $headers);
+            }
+            else{
+                abort(401);
+            }
+        }
     }
 }
