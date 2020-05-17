@@ -13,7 +13,7 @@
     <div class="sidebar-heading">Pacotes</div>
     <!-- Nav Item - Inbound Box -->
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('inbounds.index') }}">
+        <a class="nav-link pt-0" href="{{ route('inbounds.index') }}">
             <i class="fas fa-fw fa-sign-in-alt"></i>
             <span>Caixa de Entrada</span>
         </a>
@@ -76,7 +76,7 @@
             </li>
         @endif
         <!-- Divider -->
-        <hr class="sidebar-divider my-0">
+        <hr class="sidebar-divider">
     @endif
 
     @php
@@ -84,12 +84,24 @@
         $acl_audit_changeLogs = json_decode(Auth::user()->profile->acl_audit_changeLogs);
     @endphp
     @if($acl_audit_accessLogs->read||$acl_audit_changeLogs->read)
+        <!-- Heading - Management -->
+        <div class="sidebar-heading">Operacional</div>
         <!-- Nav Item - System Audit -->
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('audit.index') }}">
+            <a class="nav-link collapsed pt-0" href="#" data-toggle="collapse" data-target="#collapseAudit" aria-expanded="true" aria-controls="collapseAudit">
                 <i class="fas fa-fw fa-eye"></i>
                 <span>Auditoria</span>
             </a>
+            <div id="collapseAudit" class="collapse" aria-labelledby="headingSystem" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    @if($acl_audit_accessLogs->read)
+                        <a class="collapse-item" href="{{ route('audit',['type' => 'access']) }}">Acessos</a>
+                    @endif
+                    @if($acl_audit_changeLogs->read)
+                        <a class="collapse-item" href="{{ route('audit',['type' => 'change']) }}">Mudanças</a>
+                    @endif
+                </div>
+            </div>
         </li>
     @endif
 
