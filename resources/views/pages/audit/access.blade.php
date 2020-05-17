@@ -3,9 +3,9 @@
 	<div class="page-header mb-3">
 		<h1 class="d-inline">Auditoria de Acessos</h1>
 		@if($userPermissions->download)
-			<button class="btn btn-primary btn-circle btn-audit-access-download-add float-right d-inline" title="Baixar Listagem" type="button">
-				<i class="fas fa-download"></i>
-			</button>
+			<a href="{{ route('audit.download',['type' => 'access']) }}"  class="btn btn-primary btn-circle btn-audit-access-download-add float-right d-inline" title="Baixar Listagem" type="button">
+                <i class="fas fa-download"></i>
+			</a>
 		@endif
 	</div>
 	<div class="container-fluid">
