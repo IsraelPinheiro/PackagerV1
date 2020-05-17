@@ -50,7 +50,7 @@ class User extends Authenticatable{
         return $this->morphMany('App\ChangeLog', 'loggable');
     }
     public function reveived(){
-        return $this->hasMany('App\Package', 'recipient_id');
+        return $this->hasMany('App\Package', 'recipient_id')->whereDate('expires_at', '<=', Carbon::today()->toDateString())->orWhere('expires_at')->orWhereNull('expires_at');
     }
     public function sent(){
         return $this->hasMany('App\Package', 'sender_id');
