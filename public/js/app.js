@@ -105967,6 +105967,10 @@ __webpack_require__(/*! ./pages/profiles */ "./resources/js/pages/profiles.js");
 
 __webpack_require__(/*! ./pages/dashboards */ "./resources/js/pages/dashboards.js");
 
+__webpack_require__(/*! ./pages/inbound-packages */ "./resources/js/pages/inbound-packages.js");
+
+__webpack_require__(/*! ./pages/outbound-packages */ "./resources/js/pages/outbound-packages.js");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -106206,6 +106210,161 @@ setInterval(function () {
     });
   }
 }, 1000);
+
+/***/ }),
+
+/***/ "./resources/js/pages/inbound-packages.js":
+/*!************************************************!*\
+  !*** ./resources/js/pages/inbound-packages.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(document).ready(function () {
+  //Button Show
+  $(document).on("click", ".btn-inbounds-show", function (event) {
+    $.get("/inbounds/" + $(event.target).data("id"), function (data) {
+      $("body").append(data);
+      $(".modal").modal("toggle");
+    });
+  }); //Button Download Package
+
+  $(document).on("click", ".btn-inbounds-download", function (event) {}); //Button Link
+
+  $(document).on("click", ".btn-inbounds-link", function (event) {
+    var el = document.createElement('textarea');
+    el.value = window.location.origin + "/package/" + $(event.target).data("key");
+    document.body.appendChild(el);
+    el.select();
+    el.setSelectionRange(0, 99999);
+    /*For mobile devices*/
+
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    swal("Sucesso", "Link Direto copiado para a Área de Transferência", "success");
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/pages/outbound-packages.js":
+/*!*************************************************!*\
+  !*** ./resources/js/pages/outbound-packages.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(document).ready(function () {
+  //Buttons
+  //Button New
+  $(".btn-outbounds-add").click(function () {
+    $.get("/outbounds/create", function (data) {
+      $("body").append(data);
+      $(".modal").modal("toggle");
+    });
+  }); //Button Edit
+
+  $(document).on("click", ".btn-outbounds-edit", function (event) {
+    $.get("/outbounds/" + $(event.target).data("id") + "/edit", function (data) {
+      $("body").append(data);
+      $(".modal").modal("toggle");
+    });
+  }); //Button Show
+
+  $(document).on("click", ".btn-outbounds-show", function (event) {
+    $.get("/outbounds/" + $(event.target).data("id"), function (data) {
+      $("body").append(data);
+      $(".modal").modal("toggle");
+    });
+  }); //Button Store
+
+  $(document).on("click", ".btn-outbounds-store", function () {
+    var formData = $("#FormModal").serialize();
+    $.ajax({
+      type: "POST",
+      url: "outbounds/",
+      data: formData,
+      dataType: 'json',
+      success: function success(data) {
+        $('.modal').modal('hide');
+        swal("Sucesso", data.message, "success").then(function (value) {
+          location.reload();
+        });
+      },
+      error: function error(data) {
+        var errors = data.responseJSON.errors;
+        swal("Erro", errors[Object.keys(errors)[0]][0], "error");
+      }
+    });
+  }); //Button Update
+
+  $(document).on("click", ".btn-outbounds-update", function (event) {
+    var id = $(event.target).data("id");
+    var formData = $("#FormModal").serialize();
+    $.ajax({
+      type: "PUT",
+      url: "outbounds/" + id,
+      data: formData,
+      dataType: 'json',
+      success: function success(data) {
+        $('.modal').modal('hide');
+        swal("Sucesso", data.message, "success").then(function (value) {
+          location.reload();
+        });
+      },
+      error: function error(data) {
+        var errors = data.responseJSON.errors;
+        swal("Erro", errors[Object.keys(errors)[0]][0], "error");
+      }
+    });
+  }); //Button Deletar
+
+  $(document).on("click", ".btn-outbounds-del", function (event) {
+    swal({
+      title: "Deseja excluir o pacote ?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true
+    }).then(function (willDelete) {
+      if (willDelete) {
+        var id = $(event.target).data("id");
+        $.ajax({
+          url: "outbounds/" + id,
+          type: 'POST',
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          data: {
+            _method: 'delete'
+          },
+          success: function success(data) {
+            $(event.target).closest("tr").remove();
+            swal("Sucesso", data.message, "success");
+          },
+          error: function error(data) {
+            var errors = data.responseJSON;
+            swal("Erro", errors[Object.keys(errors)[0]], "error");
+          }
+        });
+      }
+    });
+  }); //Button Download Package
+
+  $(document).on("click", ".btn-outbounds-download", function (event) {}); //Button Link
+
+  $(document).on("click", ".btn-outbounds-link", function (event) {
+    var el = document.createElement('textarea');
+    el.value = window.location.origin + "/package/" + $(event.target).data("key");
+    document.body.appendChild(el);
+    el.select();
+    el.setSelectionRange(0, 99999);
+    /*For mobile devices*/
+
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    swal("Sucesso", "Link Direto copiado para a Área de Transferência", "success");
+  });
+});
 
 /***/ }),
 
