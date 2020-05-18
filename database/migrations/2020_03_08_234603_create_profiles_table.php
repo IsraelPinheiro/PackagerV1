@@ -35,7 +35,7 @@ class CreateProfilesTable extends Migration{
             $table->json('acl_users');      //Create | Read | Update | Delete
             $table->json('acl_profiles');   //Create | Read | Update | Delete
             //Security and Audit
-            $table->json('acl_backups');    //Create | Read | Restore | Delete
+            $table->json('acl_backups');    //Create | Read | Download | Restore | Delete
             $table->json('acl_config');    //Read | Update
             
             //TODO: Add remaining ACL Rules

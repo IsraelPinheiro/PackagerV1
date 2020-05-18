@@ -67,7 +67,7 @@ class ProfileController extends Controller{
             $profile->acl_audit_changeLogs = '{"read":'.($request->audit_change_read ? 'true':'false').', "download":'.($request->audit_change_download ? 'true':'false').'}';
             $profile->acl_users = '{"create":'.($request->users_create ? 'true':'false').', "read":'.($request->users_read ? 'true':'false').', "update":'.($request->users_update ? 'true':'false').', "delete":'.($request->users_delete ? 'true':'false').'}';
 			$profile->acl_profiles = '{"create":'.($request->profiles_create ? 'true':'false').', "read":'.($request->profiles_read ? 'true':'false').', "update":'.($request->profiles_update ? 'true':'false').', "delete":'.($request->profiles_delete ? 'true':'false').'}';
-            $profile->acl_backups = '{"create":'.($request->backups_create ? 'true':'false').', "read":'.($request->backups_read ? 'true':'false').', "restore":'.($request->backups_restore ? 'true':'false').', "delete":'.($request->backups_delete ? 'true':'false').'}';
+            $profile->acl_backups = '{"create":'.($request->backups_create ? 'true':'false').', "read":'.($request->backups_read ? 'true':'false').', "restore":'.($request->backups_restore ? 'true':'false').', "download":'.($request->backups_download ? 'true':'false').', "delete":'.($request->backups_delete ? 'true':'false').'}';
             $profile->acl_config = '{"read":'.($request->config_read ? 'true':'false').', "update":'.($request->config_update ? 'true':'false').'}';
             $profile->created_by = Auth::user()->id;
             $profile->save();
@@ -171,7 +171,7 @@ class ProfileController extends Controller{
                 $profile->acl_audit_changeLogs = '{"read":'.($request->audit_change_read ? 'true':'false').', "download":'.($request->audit_change_download ? 'true':'false').'}';
                 $profile->acl_users = '{"create":'.($request->users_create ? 'true':'false').', "read":'.($request->users_read ? 'true':'false').', "update":'.($request->users_update ? 'true':'false').', "delete":'.($request->users_delete ? 'true':'false').'}';
                 $profile->acl_profiles = '{"create":'.($request->profiles_create ? 'true':'false').', "read":'.($request->profiles_read ? 'true':'false').', "update":'.($request->profiles_update ? 'true':'false').', "delete":'.($request->profiles_delete ? 'true':'false').'}';
-                $profile->acl_backups = '{"create":'.($request->backups_create ? 'true':'false').', "read":'.($request->backups_read ? 'true':'false').', "restore":'.($request->backups_restore ? 'true':'false').', "delete":'.($request->backups_delete ? 'true':'false').'}';
+                $profile->acl_backups = '{"create":'.($request->backups_create ? 'true':'false').', "read":'.($request->backups_read ? 'true':'false').', "restore":'.($request->backups_restore ? 'true':'false').', "download":'.($request->backups_download ? 'true':'false').', "delete":'.($request->backups_delete ? 'true':'false').'}';
                 $profile->acl_config = '{"read":'.($request->config_read ? 'true':'false').', "update":'.($request->config_update ? 'true':'false').'}';
                 $profile->updated_by = Auth::user()->id;
                 $profile->save();

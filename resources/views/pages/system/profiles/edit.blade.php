@@ -235,6 +235,10 @@
 							<label for="backups_restore">Restaurar</label>
 						</div>
 						<div class="checkbox checkbox-primary pr-2">
+							<input name="backups_download" id="backups_download" type="checkbox" @if(json_decode($profile->acl_backups)->download) checked @endif hidden>
+							<label for="backups_download">Download</label>
+						</div>
+						<div class="checkbox checkbox-primary pr-2">
 							<input name="backups_delete" id="backups_delete" type="checkbox" @if(json_decode($profile->acl_backups)->delete) checked @endif hidden>
 							<label for="backups_delete">Excluir</label>
 						</div>

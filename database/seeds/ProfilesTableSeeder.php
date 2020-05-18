@@ -26,7 +26,7 @@ class ProfilesTableSeeder extends Seeder{
             'acl_audit_changeLogs' => '{"read":true, "download":true}',
             'acl_users' => '{"create":true, "read":true, "update":true, "delete":true}',
             'acl_profiles' => '{"create":true, "read":true, "update":true, "delete":true}',
-            'acl_backups' => '{"create":true, "read":true, "restore":true, "delete":true}',
+            'acl_backups' => '{"create":true, "read":true, "restore":true, "download":true, "delete":true}',
             'acl_config' => '{"read":true, "update":true}',
             'created_by' => 1
         ]);
