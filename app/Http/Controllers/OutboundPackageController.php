@@ -14,7 +14,7 @@ class OutboundPackageController extends Controller{
      */
     public function index(){
         $packages = Auth::user()->sent;
-        return view('pages.packages.outbound.index',compact('packages'));
+        return view('pages.packages.outbounds.index',compact('packages'));
     }
 
     /**
@@ -23,7 +23,7 @@ class OutboundPackageController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function create(){
-        //
+        return view('pages.packages.outbounds.new');
     }
 
     /**
@@ -43,7 +43,18 @@ class OutboundPackageController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function show($id){
-        //
+        $package = Package::find($id);
+        if($package){
+            if($package->sender_id == Auth::user()->id){
+                return view('pages.packages.outbounds.show', compact('package'));
+            }
+            else{
+                abort(401);
+            }
+        }
+        else{
+            return response()->json(['message' => 'Pacote não encontrado'],404);
+        }
     }
 
     /**
@@ -53,7 +64,18 @@ class OutboundPackageController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function edit($id){
-        //
+        $package = Package::find($id);
+        if($package){
+            if($package->sender_id == Auth::user()->id){
+                return view('pages.packages.outbounds.edit', compact('package'));
+            }
+            else{
+                abort(401);
+            }
+        }
+        else{
+            return response()->json(['message' => 'Pacote não encontrado'],404);
+        }
     }
 
     /**
@@ -74,6 +96,48 @@ class OutboundPackageController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function destroy($id){
-        //
+        $package = Package::find($id);
+        if($package){
+            if($package->sender_id == Auth::user()->id){
+                if(env('TRACK_CHANGES', true)){
+                    $log = new ChangeLog;
+                    $log->user_id = Auth::user()->id;
+                    $log->loggable_type = 'Package';
+                    $log->loggable_id = $id;
+                    $log->target_action = 'delete';
+                    $log->old_data = $pacakge->toJson();
+                    $log->save();
+                }
+                $pacakge->delete();
+                return response()->json(['level' => 'success','message' => 'Pacote Excluído'],200);
+
+            }
+            else{
+                abort(401);
+            }
+        }
+        else{
+            return response()->json(['message' => 'Pacote não encontrado'],404);
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function downloadPackage($id){
+        
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function downloadFile($id){
+        
     }
 }

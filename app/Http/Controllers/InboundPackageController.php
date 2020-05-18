@@ -15,26 +15,7 @@ class InboundPackageController extends Controller{
      */
     public function index(){
         $packages = Auth::user()->received;
-        return view('pages.packages.inbound.index',compact('packages'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(){
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request){
-        //
+        return view('pages.packages.inbounds.index',compact('packages'));
     }
 
     /**
@@ -44,28 +25,18 @@ class InboundPackageController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function show($id){
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id){
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id){
-        //
+        $package = Package::find($id);
+        if($package){
+            if($package->recipient_id == Auth::user()->id){
+                return view('pages.packages.outbounds.show', compact('package'));
+            }
+            else{
+                abort(401);
+            }
+        }
+        else{
+            return response()->json(['message' => 'Pacote não encontrado'],404);
+        }
     }
 
     /**
