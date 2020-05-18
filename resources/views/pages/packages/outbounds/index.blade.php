@@ -2,7 +2,7 @@
 @section('content')
 	<div class="page-header mb-3">
 		<h1 class="d-inline">Itens Enviados</h1>
-		<button class="btn btn-primary btn-circle btn-users-add float-right d-inline" title="Novo" type="button">
+		<button class="btn btn-primary btn-circle btn-outbounds-add float-right d-inline" title="Novo" type="button">
             <i class="fas fa-plus"></i>
         </button>
 	</div>
@@ -34,13 +34,13 @@
 						<td><center>{{ $package->files->count() }}</center></td>
 						<td class="toolbox">
                             <center>
-                                <i data-id={{$package->id}} class="fas fa-download fa-lg btn-outbound-download pr-1" title="Baixar Arquivos do Pacote"></i>
-                                <i data-id={{$package->id}} class="fas fa-eye fa-lg btn-outbound-show pr-1" title="Exibir"></i>
+                                <i data-id={{$package->id}} class="fas fa-download fa-lg btn-outbounds-download pr-1" title="Baixar Arquivos do Pacote"></i>
+                                <i data-id={{$package->id}} class="fas fa-eye fa-lg btn-outbounds-show pr-1" title="Exibir"></i>
                                 @if($package->directLink && !$package->expires_at->isPast())
-                                    <i data-key={{$package->key}} class="fas fa-link fa-lg btn-outbound-link pr-1" title="Gerar Link Direto"></i>
+                                    <i data-key={{$package->key}} class="fas fa-link fa-lg btn-outbounds-link pr-1" title="Gerar Link Direto"></i>
                                 @endif
-                                <i data-id={{$package->id}} class="fas fa-edit fa-lg btn-outbound-edit pr-1" title="Editar"></i>
-                                <i data-id={{$package->id}} class="fas fa-trash-alt fa-lg btn-outbound-del text-danger" title="Excluir"></i>
+                                <i data-id={{$package->id}} class="fas fa-edit fa-lg btn-outbounds-edit pr-1" title="Editar"></i>
+                                <i data-id={{$package->id}} class="fas fa-trash-alt fa-lg btn-outbounds-del text-danger" title="Excluir"></i>
                             </center>
 						</td>
 					</tr>
