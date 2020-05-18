@@ -20,7 +20,7 @@
 			</thead>
 			<tbody>
 				@foreach($packages as $package)
-					<tr @if($package->expires_at && $package->expires_at->isPast()) class="table-danger" @endif>
+					<tr>
                         <td><center>{{ $package->sender->name }}</center></td>
 						<td><center>{{ $package->title }}</center></td>
                         <td><center>{{ $package->created_at->format('d/m/Y') }}</center></td>

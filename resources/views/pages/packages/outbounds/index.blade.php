@@ -20,7 +20,7 @@
 			</thead>
 			<tbody>
 				@foreach($packages as $package)
-					<tr @if($package->expires_at->isPast()) class="table-danger" @endif>
+					<tr @if($package->expires_at)@if($package->expires_at->isPast()) class="table-danger" @endif @endif>
 						<td><center>{{ $package->title }}</center></td>
                         <td><center>{{ $package->created_at->format('d/m/Y') }}</center></td>
                         <td><center>
@@ -36,9 +36,15 @@
                             <center>
                                 <i data-id={{$package->id}} class="fas fa-download fa-lg btn-outbounds-download pr-1" title="Baixar Arquivos do Pacote"></i>
                                 <i data-id={{$package->id}} class="fas fa-eye fa-lg btn-outbounds-show pr-1" title="Exibir"></i>
-                                @if($package->directLink && !$package->expires_at->isPast())
-                                    <i data-key={{$package->key}} class="fas fa-link fa-lg btn-outbounds-link pr-1" title="Gerar Link Direto"></i>
-                                @endif
+								@if(!$package->expires_at)
+									@if($package->directLink)
+										<i data-key={{$package->key}} class="fas fa-link fa-lg btn-outbounds-link pr-1" title="Gerar Link Direto"></i>
+									@endif
+								@else
+									@if($package->directLink && !$package->expires_at->isPast())
+										<i data-key={{$package->key}} class="fas fa-link fa-lg btn-outbounds-link pr-1" title="Gerar Link Direto"></i>
+									@endif
+								@endif
                                 <i data-id={{$package->id}} class="fas fa-edit fa-lg btn-outbounds-edit pr-1" title="Editar"></i>
                                 <i data-id={{$package->id}} class="fas fa-trash-alt fa-lg btn-outbounds-del text-danger" title="Excluir"></i>
                             </center>
