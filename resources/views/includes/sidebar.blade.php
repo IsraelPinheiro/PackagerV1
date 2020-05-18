@@ -66,10 +66,10 @@
                 <div id="collapseDashboards" class="collapse" aria-labelledby="headingSystem" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         @if($acl_dashboards_management->read)
-                            <a class="collapse-item" href="{{ route('dashboards',['type' => 'management']) }}">Gerencial</a>
+                            <a class="collapse-item" href="{{ route('dashboards.index',['type' => 'management']) }}">Gerencial</a>
                         @endif
                         @if($acl_dashboards_operational->read)
-                            <a class="collapse-item" href="{{ route('dashboards',['type' => 'operational']) }}">Operacional</a>
+                            <a class="collapse-item" href="{{ route('dashboards.index',['type' => 'operational']) }}">Operacional</a>
                         @endif
                     </div>
                 </div>
