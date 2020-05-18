@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Auth;
+use App\Backup;
+
 class BackupController extends Controller{
     /**
      * Display a listing of the resource.
@@ -11,7 +14,14 @@ class BackupController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        //
+        $userPermissions = json_decode(Auth::user()->profile->acl_backups);
+        if($userPermissions->read){
+            $backups = Backup::all();
+            return view('pages.system.backups.index',compact('userPermissions','backups'));
+        }
+        else{
+            abort(401);
+        }
     }
 
     /**
