@@ -89,8 +89,8 @@
 							<label for="dashboards_management_read">Dashboard Gerencial</label>
 						</div>
 						<div class="checkbox checkbox-primary pr-2">
-							<input name="dashboards_operationa_read" id="dashboards_operationa_read" type="checkbox" hidden>
-							<label for="dashboards_operationa_read">Dashboard Operacional</label>
+							<input name="dashboards_operational_read" id="dashboards_operational_read" type="checkbox" hidden>
+							<label for="dashboards_operational_read">Dashboard Operacional</label>
 						</div>
 					</div>
 				</div>

@@ -108,7 +108,7 @@
     @php
 	    $acl_users = json_decode(Auth::user()->profile->acl_users);
         $acl_profiles = json_decode(Auth::user()->profile->acl_profiles);
-        $acl_backups = json_decode(Auth::user()->profile->acl_dashboards_management);
+        $acl_backups = json_decode(Auth::user()->profile->acl_backups);
         $acl_config = json_decode(Auth::user()->profile->acl_config);
 	@endphp
     @if($acl_users->read||$acl_profiles->read||$acl_backups->read||$acl_config->read)
