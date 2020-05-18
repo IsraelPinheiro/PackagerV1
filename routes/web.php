@@ -43,7 +43,8 @@ Route::resource('inbounds', 'InboundPackageController')->only(['index'])->middle
 Route::resource('outbounds', 'OutboundPackageController')->only(['index'])->middleware('auth');
 Route::resource('reports', 'ReportController@index')->only(['index'])->middleware('auth');
 Route::get('/reports/{type?}/{report?}', 'ReportController@index')->where("type","operational|administrative")->middleware('auth');
-Route::get('/dashboards/{type}', 'DashboardController@index')->where("type","management|operational")->name('dashboards')->middleware('auth');
+Route::get('/dashboards/{type}', 'DashboardController@index')->where("type","management|operational")->name('dashboards.index')->middleware('auth');
+Route::get('/dashboards/{type}/charts', 'DashboardController@charts')->where("type","management|operational")->name('dashboards.charts')->middleware('auth');
 Route::resource('config', 'OutboundPackagesController')->only(['index'])->middleware('auth');
 
 //Opções
