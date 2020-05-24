@@ -106432,6 +106432,55 @@ $(document).ready(function () {
     document.body.removeChild(el);
     swal("Sucesso", "Link Direto copiado para a Área de Transferência", "success");
   });
+  $(document).on("change", "#DirectLinkStatus", function (event) {
+    if ($("#DirectLinkStatus").val() == "2") {
+      $("#passwordContainer").removeClass("d-none");
+      $("#Password").prop('required', true);
+    } else {
+      $("#passwordContainer").addClass("d-none");
+      $("#Password").prop('required', false);
+    }
+  });
+  $(document).on("change", "#ExpirationDateStatus", function (event) {
+    if ($("#ExpirationDateStatus").val() == "1") {
+      $("#ExpirationDateContainer").removeClass("d-none");
+      $("#ExpirationDate").prop('required', true);
+    } else {
+      $("#ExpirationDateContainer").addClass("d-none");
+      $("#ExpirationDate").prop('required', false);
+    }
+  });
+  $(document).on("change", "#Arquivos", function (event) {
+    if ($("#Arquivos").val()) {
+      $("#NomeArquivo").text(event.target.files[0].name);
+      $(".btn-remove").parent().removeClass("d-none");
+    } else {
+      $("#NomeArquivo").text("Escolha um arquivo");
+      $(".btn-remove").parent().addClass("d-none");
+    }
+  });
+  $(document).on("click", ".btn-remove", function () {
+    $("#Arquivos").val(null);
+    $("#Arquivos").change();
+  });
+  $(document).on("change", "#Arquivos", function (event) {
+    if ($("#Arquivos").val()) {
+      if (event.target.files.length == 1) {
+        $("#NomeArquivo").text(event.target.files[0].name);
+      } else {
+        $("#NomeArquivo").text(event.target.files.length + " Arquivos Selecionados");
+      }
+
+      $(".btn-remove").parent().removeClass("d-none");
+    } else {
+      $("#NomeArquivo").text("Escolha um arquivo");
+      $(".btn-remove").parent().addClass("d-none");
+    }
+  });
+  $(document).on("click", ".btn-remove", function () {
+    $("#Arquivos").val(null);
+    $("#Arquivos").change();
+  });
 });
 
 /***/ }),
