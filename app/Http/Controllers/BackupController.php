@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+
 use Auth;
+use Config;
 use App\Backup;
 
 class BackupController extends Controller{
@@ -82,5 +86,28 @@ class BackupController extends Controller{
      */
     public function destroy($id){
         //
+    }
+
+    /**
+     * Run the backup script
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function backup(){
+        $host = Config("database.connections.".Config("database.default").".host");
+        $database = Config("database.connections.".Config("database.default").".database");
+        $user = Config("database.connections.".Config("database.default").".username");
+        $password = Config("database.connections.".Config("database.default").".password");
+
+        $process = new Process(["python",resource_path('python\pybackup.py'),$host,$user,$password,$database]);
+        $process->run();
+        dd($process);
+        // executes after the command finishes
+        if (!$process->isSuccessful()) {
+            return new ProcessFailedException($process);
+        }
+        else{
+            return True;
+        }
     }
 }
