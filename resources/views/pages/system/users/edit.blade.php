@@ -30,7 +30,7 @@
                     </select>
                 </div>
 			</div>
-             <div class="col-md-6">
+			<div class="col-md-6">
                 <div class="form-group">
                     <label for="Status">Situação</label>
                     <select name="Status" class="form-control">
