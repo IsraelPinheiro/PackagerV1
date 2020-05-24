@@ -21,7 +21,11 @@ DB_HOST = args.host
 DB_USER = args.user
 DB_USER_PASSWORD = args.password
 DB_NAME = args.database
-BACKUP_PATH = 'backups/'
+BACKUP_PATH = 'storage/app/backups/'
+#Create backup directory if it doesn't exists
+if not os.path.exists(BACKUP_PATH):
+    os.makedirs(BACKUP_PATH)
+
 # Getting current DateTime to create the separate backup folder like "20180817-123433".
 
 TIME_NOW = datetime.now()
@@ -57,7 +61,7 @@ cursor = db.cursor()
 
 #Prepare the query and register the backup on the database
 query = "INSERT backups(name,created_at,md5,file) VALUES(%s,%s,%s,%s)"
-val = (FILE_NAME,CREATED_AT, md5_digest,"backups/"+FILE_NAME+".zip")
+val = (FILE_NAME,CREATED_AT, md5_digest,BACKUP_PATH+FILE_NAME+".zip")
 cursor.execute(query, val)
 db.commit()
 db.close()
