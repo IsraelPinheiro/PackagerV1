@@ -105971,6 +105971,8 @@ __webpack_require__(/*! ./pages/inbound-packages */ "./resources/js/pages/inboun
 
 __webpack_require__(/*! ./pages/outbound-packages */ "./resources/js/pages/outbound-packages.js");
 
+__webpack_require__(/*! ./pages/backups */ "./resources/js/pages/backups.js");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -106069,6 +106071,72 @@ $(document).ready(function () {
   $('.datatable').DataTable();
   $('#Search').keyup(function () {
     dataTable.search($(this).val()).draw();
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/pages/backups.js":
+/*!***************************************!*\
+  !*** ./resources/js/pages/backups.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(document).ready(function () {
+  //Buttons
+  //Button New
+  $(".btn-backups-run").click(function () {
+    $.get("/backups/create", function (data) {
+      $("body").append(data);
+      $(".modal").modal("toggle");
+    });
+  }); //Button Show
+
+  $(document).on("click", ".btn-backups-show", function (event) {
+    $.get("/backups/" + $(event.target).data("id"), function (data) {
+      $("body").append(data);
+      $(".modal").modal("toggle");
+    });
+  }); //Button Dowload
+
+  $(document).on("click", ".btn-backups-download", function (event) {
+    $.get("/backups/" + $(event.target).data("id") + "/edit");
+  }); //Button Restore
+
+  $(document).on("click", ".btn-backups-restore", function (event) {
+    swal("Indisponível", "Restauração de Backups indisponível", "warning");
+  }); //Button Deletar
+
+  $(document).on("click", ".btn-backups-del", function (event) {
+    swal({
+      title: "Deseja excluir o Backup ?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true
+    }).then(function (willDelete) {
+      if (willDelete) {
+        var id = $(event.target).data("id");
+        $.ajax({
+          url: "backups/" + id,
+          type: 'POST',
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          data: {
+            _method: 'delete'
+          },
+          success: function success(data) {
+            $(event.target).closest("tr").remove();
+            swal("Sucesso", data.message, "success");
+          },
+          error: function error(data) {
+            var errors = data.responseJSON;
+            swal("Erro", errors[Object.keys(errors)[0]], "error");
+          }
+        });
+      }
+    });
   });
 });
 
