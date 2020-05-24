@@ -1,0 +1,15 @@
+a:not([href]) {
+	cursor: pointer;
+}
+i.material-icons{
+	vertical-align:bottom;
+}
+.fas{
+    line-height: inherit !important;
+}
+.noafter:after, .nobefore:before{
+    content: none!important;
+}
+.badge{
+    vertical-align: middle;
+}

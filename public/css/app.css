@@ -11199,6 +11199,20 @@ body.sidebar-toggled footer.sticky-footer {
 }
 .radio-success input[type="radio"]:checked + label::after {
     background-color: #5cb85c;
+}a:not([href]) {
+	cursor: pointer;
+}
+i.material-icons{
+	vertical-align:bottom;
+}
+.fas{
+    line-height: inherit !important;
+}
+.noafter:after, .nobefore:before{
+    content: none!important;
+}
+.badge{
+    vertical-align: middle;
 }@charset "UTF-8";
 
 /*!
