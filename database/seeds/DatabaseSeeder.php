@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder{
         $this->call(ProfilesTableSeeder::class);
         $this->call(UsersTableSeeder::class);
         if(app()->environment('local')){
-            //$this->call(FakeUsersTableSeeder::class);
+            $this->call(FakeUsersTableSeeder::class);
         }
         if(app()->environment('production')){
             

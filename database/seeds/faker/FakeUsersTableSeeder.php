@@ -14,7 +14,7 @@ class FakeUsersTableSeeder extends Seeder{
         $faker = Factory::create('pt_BR');
         $max = rand(10, 60);
         for($i = 0; $i <= $max; $i++){
-            $perfil = rand(1, 3);
+            $perfil = rand(1, 2);
             User::create([
                 'name' => $faker->name,
                 'email' => $faker->email,

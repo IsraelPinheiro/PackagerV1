@@ -32,6 +32,25 @@ class ProfilesTableSeeder extends Seeder{
         ]);
         $this->command->info('Administrator Profile Created');
 
+        Profile::create([
+            'name' => 'Usuário',
+            'description' => 'Perfil padrão de administrador do sistema',
+            'acl_audit_accessLogs' =>    '{"read":true, "download":true}',
+            'acl_audit_changeLogs' =>    '{"read":true, "download":true, "restore":true}',
+            'acl_reports_administrative'=> '{"read":true}',
+            'acl_reports_operational'=> '{"read":true}',
+            'acl_dashboards_management' => '{"read":true}',
+            'acl_dashboards_operational'=> '{"read":true}',
+            'acl_audit_accessLogs' => '{"read":true, "download":true}',
+            'acl_audit_changeLogs' => '{"read":true, "download":true}',
+            'acl_users' => '{"create":true, "read":true, "update":true, "delete":true}',
+            'acl_profiles' => '{"create":false, "read":false, "update":false, "delete":false}',
+            'acl_backups' => '{"create":false, "read":false, "restore":false, "download":false, "delete":false}',
+            'acl_config' => '{"read":false, "update":false}',
+            'created_by' => 1
+        ]);
+        $this->command->info('User Profile Created');
+
         if(app()->environment('local')){
             
         }
