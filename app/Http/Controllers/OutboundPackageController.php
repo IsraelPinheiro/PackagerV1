@@ -66,19 +66,39 @@ class OutboundPackageController extends Controller{
         $package->recipient_id = $request->Recipient;
         $package->expires_at = Carbon::parse($request->ExpirationDate)->endOfDay();
         $package->save();
+        //TODO: Enable logging
+        /*
+        if(env('TRACK_CHANGES', true)){
+            $log = new ChangeLog;
+            $log->user_id = Auth::user()->id;
+            $log->loggable_type = 'package';
+            $log->loggable_id = $user->$id;
+            $log->target_action = 'create';
+            $log->old_data = null;
+            $log->save();
+        }*/            
+        return response()->json(['id' => $package->id],200);
+    }
 
+        /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function upload(Request $request){
         $files = $request->file('Files');
+        dd($request->file('Files'));
         if(!empty($files)){
             foreach($files as $f){
                 Storage::put($f);
                 $file = new File;
                 $file->file = Storage::put($f);
-                $file->package_id = $package->id;
+                $file->package_id = $request->PackageId;
                 $file->extension = $f->extension();
             }
         }
-
-
+        
         //TODO: Enable logging
         /*
         if(env('TRACK_CHANGES', true)){
