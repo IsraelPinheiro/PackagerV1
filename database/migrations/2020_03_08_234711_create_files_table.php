@@ -15,6 +15,7 @@ class CreateFilesTable extends Migration{
             $table->id();
             $table->bigInteger('package_id')->unsigned();
             $table->bigInteger('size')->unsigned();
+            $table->string('extension');
             $table->string('file');
             $table->timestamps();
         });
