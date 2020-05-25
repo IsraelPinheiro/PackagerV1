@@ -41,7 +41,8 @@ Route::get('/reports/{type?}/{report?}', 'ReportController@index')->where("type"
 Route::get('/dashboards/{type}', 'DashboardController@index')->where("type","management|operational")->name('dashboards.index')->middleware('auth');
 Route::get('/dashboards/{type}/charts', 'DashboardController@charts')->where("type","management|operational")->name('dashboards.charts')->middleware('auth');
 //Backups
-Route::resource('backups', 'BackupController')->middleware('auth');
+Route::resource('backups', 'BackupController')->middleware('auth')->except(["store"]);
+
 //User Profiles
 Route::resource('profiles', 'ProfileController')->middleware('auth');
 Route::get('/profiles/{id}/users','ProfileController@listUsers')->name("profiles.users")->middleware('auth');
