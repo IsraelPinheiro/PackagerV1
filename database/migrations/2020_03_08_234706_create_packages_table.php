@@ -15,13 +15,12 @@ class CreatePackagesTable extends Migration{
             $table->id();
             $table->string('title');
             $table->text('description')->nullable()->default(null);
-            $table->string('key', 32)->unique();
+            $table->string('key')->unique()->nullable()->default(null);
             $table->string('password')->nullable()->default(null);
             $table->bigInteger('sender_id')->unsigned();
             $table->bigInteger('recipient_id')->unsigned();
             $table->boolean('new')->default(true);
-            $table->boolean('directLink')->default(false);
-            $table->timestamp('expires_at')->nullable()->default(NULL);
+            $table->timestamp('expires_at')->nullable()->default(null);
             $table->timestamps();
         });
     }
