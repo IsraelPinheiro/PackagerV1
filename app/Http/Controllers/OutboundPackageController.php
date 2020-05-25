@@ -4,7 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+use Hash;
+use Storage;
+use Carbon\Carbon;
 use App\Package;
+use App\File;
+use App\User;
 
 class OutboundPackageController extends Controller{
     /**
@@ -23,7 +28,8 @@ class OutboundPackageController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function create(){
-        return view('pages.packages.outbounds.new');
+        $users= User::all();
+        return view('pages.packages.outbounds.new',compact('users'));
     }
 
     /**
@@ -33,7 +39,58 @@ class OutboundPackageController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-        //
+        $request->validate([
+            'Title' => 'bail|required|min:3|string',
+            'Recipient' => 'bail|required'
+        ]);
+        if($request->DirectLinkStatus==2){
+            $request->validate([
+                'Password' => 'bail|required|min:6'
+            ]);
+        }
+        if($request->ExpirationDateStatus==1){
+            $request->validate([
+                'ExpirationDate' => 'bail|required|date|after:yesterday'
+            ]);
+        }
+        $package = new Package;
+        $package->title = $request->Title;
+        $package->description = $request->Description;
+        if($request->DirectLinkStatus!=0){
+            $package->key = md5(Carbon::now());
+            if($request->DirectLinkStatus==2){
+                $package->password = Hash::make($request->Password);
+            }
+        }
+        $package->sender_id = Auth::user()->id;
+        $package->recipient_id = $request->Recipient;
+        $package->expires_at = Carbon::parse($request->ExpirationDate)->endOfDay();
+        $package->save();
+
+        $files = $request->file('Files');
+        if(!empty($files)){
+            foreach($files as $f){
+                Storage::put($f);
+                $file = new File;
+                $file->file = Storage::put($f);
+                $file->package_id = $package->id;
+                $file->extension = $f->extension();
+            }
+        }
+
+
+        //TODO: Enable logging
+        /*
+        if(env('TRACK_CHANGES', true)){
+            $log = new ChangeLog;
+            $log->user_id = Auth::user()->id;
+            $log->loggable_type = 'package';
+            $log->loggable_id = $user->$id;
+            $log->target_action = 'create';
+            $log->old_data = null;
+            $log->save();
+        }*/            
+        return response()->json(['message' => 'Pacote Enviado'],200);
     }
 
     /**
