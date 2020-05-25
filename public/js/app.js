@@ -106346,17 +106346,44 @@ $(document).ready(function () {
     });
   }); //Button Store
 
-  $(document).on("click", ".btn-outbounds-store", function () {
+  $(document).on("click", ".btn-package-send", function () {
     var formData = $("#FormModal").serialize();
     $.ajax({
       type: "POST",
       url: "outbounds/",
       data: formData,
       dataType: 'json',
-      success: function success(data) {
-        $('.modal').modal('hide');
-        swal("Sucesso", data.message, "success").then(function (value) {
-          location.reload();
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      success: function success() {
+        console.log("Try Upload");
+        var formData = $("#FormModalFiles").serialize();
+        $.ajax({
+          type: "POST",
+          url: "outbounds/upload/",
+          data: formData,
+          dataType: 'json',
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          processData: false,
+          // Important!
+          contentType: false,
+          enctype: 'multipart/form-data',
+          cache: false,
+          success: function success(data) {
+            console.log(data.responseText);
+            $('.modal').modal('hide');
+            swal("Sucesso", data.message, "success").then(function (value) {
+              location.reload();
+            });
+          },
+          error: function error(data) {
+            console.log(data.responseText);
+            var errors = data.responseJSON.errors;
+            swal("Erro", errors[Object.keys(errors)[0]][0], "error");
+          }
         });
       },
       error: function error(data) {
@@ -106450,36 +106477,36 @@ $(document).ready(function () {
       $("#ExpirationDate").prop('required', false);
     }
   });
-  $(document).on("change", "#Arquivos", function (event) {
-    if ($("#Arquivos").val()) {
-      $("#NomeArquivo").text(event.target.files[0].name);
+  $(document).on("change", "#Files", function (event) {
+    if ($("#Files").val()) {
+      $("#FileName").text(event.target.files[0].name);
       $(".btn-remove").parent().removeClass("d-none");
     } else {
-      $("#NomeArquivo").text("Escolha um arquivo");
+      $("#FileName").text("Escolha um arquivo");
       $(".btn-remove").parent().addClass("d-none");
     }
   });
   $(document).on("click", ".btn-remove", function () {
-    $("#Arquivos").val(null);
-    $("#Arquivos").change();
+    $("#Files").val(null);
+    $("#Files").change();
   });
-  $(document).on("change", "#Arquivos", function (event) {
-    if ($("#Arquivos").val()) {
+  $(document).on("change", "#Files", function (event) {
+    if ($("#Files").val()) {
       if (event.target.files.length == 1) {
-        $("#NomeArquivo").text(event.target.files[0].name);
+        $("#FileName").text(event.target.files[0].name);
       } else {
-        $("#NomeArquivo").text(event.target.files.length + " Arquivos Selecionados");
+        $("#FileName").text(event.target.files.length + " Arquivos Selecionados");
       }
 
       $(".btn-remove").parent().removeClass("d-none");
     } else {
-      $("#NomeArquivo").text("Escolha um arquivo");
+      $("#FileName").text("Escolha um arquivo");
       $(".btn-remove").parent().addClass("d-none");
     }
   });
   $(document).on("click", ".btn-remove", function () {
-    $("#Arquivos").val(null);
-    $("#Arquivos").change();
+    $("#Files").val(null);
+    $("#Files").change();
   });
 });
 
