@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Package;
 use Carbon\Carbon;
+use App\File;
 
 class InboundPackageController extends Controller{
     /**
@@ -28,7 +29,7 @@ class InboundPackageController extends Controller{
         $package = Package::find($id);
         if($package){
             if($package->recipient_id == Auth::user()->id){
-                return view('pages.packages.outbounds.show', compact('package'));
+                return view('pages.packages.inbounds.show', compact('package'));
             }
             else{
                 abort(401);
