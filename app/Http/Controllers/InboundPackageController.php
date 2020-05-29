@@ -7,6 +7,7 @@ use Auth;
 use App\Package;
 use Carbon\Carbon;
 use App\File;
+use App\ChangeLog;
 
 class InboundPackageController extends Controller{
     /**

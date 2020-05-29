@@ -10,7 +10,7 @@ use Carbon\Carbon;
 use App\Package;
 use App\File;
 use App\User;
-
+use App\ChangeLog;
 class OutboundPackageController extends Controller{
     /**
      * Display a listing of the resource.
@@ -182,10 +182,10 @@ class OutboundPackageController extends Controller{
                     $log->loggable_type = 'Package';
                     $log->loggable_id = $id;
                     $log->target_action = 'delete';
-                    $log->old_data = $pacakge->toJson();
+                    $log->old_data = $package->toJson();
                     $log->save();
                 }
-                $pacakge->delete();
+                $package->delete();
                 return response()->json(['level' => 'success','message' => 'Pacote Excluído'],200);
 
             }
