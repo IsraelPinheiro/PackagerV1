@@ -14,18 +14,17 @@ i.material-icons{
     vertical-align: middle;
 }
 
-
 /* Home Stats */
 .stats {
     padding: 10px 0 10px 0;
-  }
-  .stats .counter .number {
+}
+.stats .counter .number {
     font-size: 4.5rem;
     font-weight: 200;
-  }
-  .stats .counter .title {
+}
+.stats .counter .title {
     max-width: 200px;
     font-size: 1.25rem;
     line-height: 1.2;
     font-weight: bold;
-  }
+}
