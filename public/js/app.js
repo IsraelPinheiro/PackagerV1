@@ -106837,9 +106837,7 @@ $(document).ready(function () {
         });
       }
     });
-  }); //Button Download Package
-
-  $(document).on("click", ".btn-outbounds-download", function (event) {}); //Button Link
+  }); //Button Link
 
   $(document).on("click", ".btn-outbounds-link", function (event) {
     var el = document.createElement('textarea');

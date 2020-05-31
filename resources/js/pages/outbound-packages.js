@@ -124,11 +124,6 @@ $(document).ready(function(){
 		});
     });
     
-    //Button Download Package
-	$(document).on("click", ".btn-outbounds-download",function(event){
-		
-    });
-    
     //Button Link
 	$(document).on("click", ".btn-outbounds-link",function(event){
         const el = document.createElement('textarea');
