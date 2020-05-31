@@ -17,7 +17,7 @@ class CreateChangeLogsTable extends Migration{
             $table->enum('loggable_type', ['User', 'Profile', 'Backup', 'Package']);
             $table->bigInteger('loggable_id')->unsigned();
             $table->enum('target_action', ['create', 'read', 'update', 'delete']);
-            $table->json('old_data')->default(null);
+            $table->json('old_data')->nullable()->default(null);
             $table->timestamp('created_at');
         });
     }
