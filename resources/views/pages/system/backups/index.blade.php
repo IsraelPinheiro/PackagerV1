@@ -30,7 +30,7 @@
 							<center>
 								<i data-id={{$backup->id}} class="fas fa-eye fa-lg btn-backups-show pr-1" title="Exibir"></i>
 								@if($userPermissions->download)
-									<i data-id={{$backup->id}} class="fas fa-download fa-lg btn-backups-download pr-1" title="Download"></i>
+									<i class="fas fa-download fa-lg btn-outbounds-download pr-1" title="Baixar Arquivos do Pacote" onclick='javascript:location.href="{{ route('backups.download',['backup' => $backup->id]) }}"'></i>
 								@endif
 								@if($userPermissions->restore)
 									<i data-id={{$backup->id}} class="fas fa-undo fa-lg btn-backups-restore pr-1 disabled" title="Restaurar Backup"></i>
