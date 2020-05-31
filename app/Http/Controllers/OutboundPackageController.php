@@ -79,7 +79,6 @@ class OutboundPackageController extends Controller{
             }
         }
         
-        //TODO: Enable logging
         if(env('TRACK_CHANGES', true)){
             $log = new ChangeLog;
             $log->user_id = Auth::user()->id;
