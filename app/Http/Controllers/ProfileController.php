@@ -71,17 +71,15 @@ class ProfileController extends Controller{
             $profile->acl_config = '{"read":'.($request->config_read ? 'true':'false').', "update":'.($request->config_update ? 'true':'false').'}';
             $profile->created_by = Auth::user()->id;
             $profile->save();
-            //TODO: Enable logging
-            /*
             if(env('TRACK_CHANGES', true)){
                 $log = new ChangeLog;
                 $log->user_id = Auth::user()->id;
                 $log->loggable_type = 'profile';
-                $log->loggable_id = $profile->$id;
+                $log->loggable_id = $profile->id;
                 $log->target_action = 'create';
                 $log->old_data = null;
                 $log->save();
-            }*/            
+            }
             return response()->json(['message' => 'Usuário Criado'],200);
         }
         else{
