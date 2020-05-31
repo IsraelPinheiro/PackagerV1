@@ -73,7 +73,7 @@
 			<div id="ExpirationDateContainer" class="col-md-6 d-none">
 				<div class="form-group">
 					<label for="ExpirationDate">Data Limite de Acesso</label>
-					<input name="ExpirationDate" id="ExpirationDate" type="date" min="{{\Carbon\Carbon::now()->format('Y-m-d')}}" value="{{\Carbon\Carbon::now()->format('Y-m-d')}}" class="form-control" minlength="6">
+					<input name="ExpirationDate" id="ExpirationDate" type="date" min="{{\Carbon\Carbon::now()->format('Y-m-d')}}" value="{{\Carbon\Carbon::now()->format('Y-m-d')}}" class="form-control">
 				</div>
 			</div>
 		</div>
