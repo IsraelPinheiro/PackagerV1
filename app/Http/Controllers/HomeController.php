@@ -34,7 +34,13 @@ class HomeController extends Controller{
         foreach ($sent as $package) {
             $usedSpace += $package->files->sum("size");
         }
-        $usedSpace = self::formatBytes($usedSpace);
+        if($usedSpace>0){
+            $usedSpace = self::formatBytes($usedSpace);
+        }
+        else{
+            $usedSpace = "Zero";
+        }
+            
         return view('pages.home',compact('sent', 'received', 'usedSpace'));
     }
 }
