@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use Hash;
+use ZipArchive;
 use Storage;
 use Carbon\Carbon;
 use App\Package;
 use App\File;
 use App\User;
 use App\ChangeLog;
+
+
 class OutboundPackageController extends Controller{
     /**
      * Display a listing of the resource.
@@ -163,9 +166,12 @@ class OutboundPackageController extends Controller{
                     $log->old_data = $package->toJson();
                     $log->save();
                 }
+                foreach ($package->files as $file) {
+                    Storage::delete($file->file);
+                    $file->delete();
+                }
                 $package->delete();
                 return response()->json(['level' => 'success','message' => 'Pacote Excluído'],200);
-
             }
             else{
                 abort(401);
@@ -177,22 +183,53 @@ class OutboundPackageController extends Controller{
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Download the specified package from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function downloadPackage($id){
-        
+        $package = Package::find($id);
+        if($package){
+            if($package->sender_id == Auth::user()->id){
+                $tempFile = 'temp/'.md5(Carbon::now()).'.zip';
+                $zip = new ZipArchive();
+                if($zip->open(public_path($tempFile), ZipArchive::CREATE | ZipArchive::OVERWRITE)){
+                    foreach ($package->files as $file) {
+                        $zip->addFile(str_replace("\\", "/",Storage::disk('local')->path($file->file)),$file->originalName);
+                    }
+                    if($zip->close()){
+                        return response()->download(public_path($tempFile), $package->title.'.zip');
+                    }
+                }
+            }
+            else{
+                abort(401);
+            }
+        }
+        else{
+            return response()->json(['message' => 'Pacote não encontrado'],404);
+        } 
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Download the specified file from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function downloadFile($id){
-        
+        $file = File::find($id);
+        if($file){
+            if($file->package->sender_id == Auth::user()->id){
+                return Storage::download($file->file, $file->originalName);
+            }
+            else{
+                abort(401);
+            }
+        }
+        else{
+            return response()->json(['message' => 'Arquivo não encontrado'],404);
+        }        
     }
 }
