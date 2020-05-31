@@ -61,7 +61,6 @@
                     @endif
                 </div>
 			</div>
-            
 			<div id="ExpirationDateContainer" class="col-md-6">
 				<div class="form-group">
 					<label for="ExpirationDate">Data Limite de Acesso</label>
@@ -73,10 +72,7 @@
 				</div>
 			</div>
 		</div>
-	</form>
-	<form id="FormModalFiles" enctype="multipart/form-data">
-		<input type="text" class="d-none" id="PackageId" name="PackageId">
-		@csrf
+
 		{{-- Drop Zone --}}
 		<div class="row">
 			<div class="col-md-12">
