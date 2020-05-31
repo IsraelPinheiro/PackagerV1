@@ -27,45 +27,42 @@ $(document).ready(function(){
 	//Button Store
 	$(document).on("click", ".btn-package-send",function(){
 		let files = document.getElementById("Files")
-		let request = new XMLHttpRequest()
 		let formData = new FormData()
-
 		formData.append("Title", $("[name='Title']").val())
 		formData.append("Description", $("[name='Description']").val())
-		formData.append("Recipient", $("[name='Recipient']").val())
+		if("Recipient", $("[name='Recipient']").val()!=null){
+			formData.append("Recipient", $("[name='Recipient']").val())
+		}
 		formData.append("DirectLinkStatus", $("[name='DirectLinkStatus']").val())
 		formData.append("Password", $("[name='Password']").val())
 		formData.append("ExpirationDateStatus", $("[name='ExpirationDateStatus']").val())
 		formData.append("ExpirationDate", $("[name='ExpirationDate']").val())
-
 		for (let file of files.files) {
 			formData.append("files[]", file)
 		}
-		console.log(formData)
-		request.open("POST", "outbounds/", true)
-		request.setRequestHeader("X-CSRF-TOKEN", $('meta[name="csrf-token"]').attr('content'))
-		request.send(formData)
-
-
-
-		
-		/*$.ajax({
-			url: "outbounds/",
-			type: "POST",
+		$.ajax({
+			type:"POST",
+			url:"outbounds/",
+			data: formData,
+			dataType: 'json',
+			processData: false,
+			contentType: false,
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
-			data: $("#FormModal").serializeArray(),
-			dataType: 'json',
-			cache: false,
 			success: function(data){
-				$("body").append(data);
-				console.log(data.responseText)
+				$('.modal').modal('hide');
+				swal("Sucesso", data.message, "success").then(
+					(value) => {
+						location.reload();
+					}
+				);
 			},
 			error: function(data){
-				console.log(data.responseText)
+				var errors = data.responseJSON.errors;
+				swal("Erro", errors[Object.keys(errors)[0]][0], "error")
 			}
-		});*/
+		});
 	});
 
     //Button Update
@@ -138,7 +135,6 @@ $(document).ready(function(){
 		document.body.removeChild(el);
         swal("Sucesso", "Link Direto copiado para a Área de Transferência", "success")
 	});
-
 
 	$(document).on("change","#DirectLinkStatus",function(event){
 		if($("#DirectLinkStatus").val() == "2"){
