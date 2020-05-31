@@ -102,7 +102,6 @@ class OutboundPackageController extends Controller{
      */
     public function show($id){
         $package = Package::find($id);
-        
         if($package){
             if($package->sender_id == Auth::user()->id){
                 return view('pages.packages.outbounds.show', compact('package'));
@@ -146,7 +145,63 @@ class OutboundPackageController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id){
-        //
+        $package = Package::find($id);
+        if($package){
+            if($package->sender_id == Auth::user()->id){
+                $request->validate([
+                    'Title' => 'bail|required|min:3|string',
+                    'Recipient' => 'bail|required'
+                ]);
+                if($request->DirectLinkStatus==2){
+                    $request->validate([
+                        'Password' => 'bail|required|min:6'
+                    ]);
+                }
+                if($request->ExpirationDateStatus==1){
+                    $request->validate([
+                        'ExpirationDate' => 'bail|required|date|after:yesterday'
+                    ]);
+                }
+                if(env('TRACK_CHANGES', true)){
+                    $log = new ChangeLog;
+                    $log->user_id = Auth::user()->id;
+                    $log->loggable_type = 'package';
+                    $log->loggable_id = $package->id;
+                    $log->target_action = 'update';
+                    $log->old_data = $package->toJson();
+                    $log->save();
+                }
+                $package->title = $request->Title;
+                $package->description = $request->Description;
+                if($request->DirectLinkStatus == 0){
+                    $package->key = null;
+                    $package->password = null;
+                }
+                else{
+                    $package->key = md5(Carbon::now());
+                    if($request->DirectLinkStatus==2){
+                        $package->password = Hash::make($request->Password);
+                    }
+                    else{
+                        $package->password = null;
+                    }
+                }
+                $package->recipient_id = $request->Recipient;
+                if($package->ExpirationDateStatus==1){
+                    $package->expires_at = Carbon::parse($request->ExpirationDate)->endOfDay();
+                }else{
+                    $package->expires_at = null;
+                }                
+                $package->save();
+                return response()->json(['level' => 'success','message' => 'Pacote Alterado'],200);
+            }
+            else{
+                abort(401);
+            }
+        }
+        else{
+            return response()->json(['message' => 'Usuário não encontrado'],404);
+        }
     }
 
     /**
