@@ -106826,7 +106826,9 @@ $(document).ready(function () {
           },
           success: function success(data) {
             $(event.target).closest("tr").remove();
-            swal("Sucesso", data.message, "success");
+            swal("Sucesso", data.message, "success").then(function (value) {
+              location.reload();
+            });
           },
           error: function error(data) {
             var errors = data.responseJSON;
