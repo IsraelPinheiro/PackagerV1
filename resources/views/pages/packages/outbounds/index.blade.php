@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 	<div class="page-header mb-3">
-		<h1 class="d-inline">Itens Enviados</h1>
+		<h1 class="d-inline">Caixa de Saída</h1>
 		<button class="btn btn-primary btn-circle btn-outbounds-add float-right d-inline" title="Novo" type="button">
             <i class="fas fa-plus"></i>
         </button>
