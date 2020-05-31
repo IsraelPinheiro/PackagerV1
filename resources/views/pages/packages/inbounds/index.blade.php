@@ -2,9 +2,6 @@
 @section('content')
 	<div class="page-header mb-3">
 		<h1 class="d-inline">Caixa de Entrada</h1>
-		<button class="btn btn-primary btn-circle btn-users-add float-right d-inline" title="Novo" type="button">
-            <i class="fas fa-plus"></i>
-        </button>
 	</div>
 	<div class="container-fluid">
 		<table id="datatable" class="datatable table table-striped" cellspacing="0" width="100%">
