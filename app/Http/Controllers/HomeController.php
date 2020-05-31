@@ -29,7 +29,7 @@ class HomeController extends Controller{
      */
     public function index(){
         $sent = Auth::user()->sent;
-        $received = Auth::user()->sent;
+        $received = Auth::user()->received->where("new", true);
         $usedSpace = 0;
         foreach ($sent as $package) {
             $usedSpace += $package->files->sum("size");
