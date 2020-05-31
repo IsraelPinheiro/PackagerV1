@@ -103,5 +103,5 @@
 @stop
 @section('actions')
 	<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-	<button type="submit" class="btn btn-primary btn-package-update" data-id={{$package->id}}>Salvar</button>
+	<button type="submit" class="btn btn-primary btn-outbounds-update" data-id={{$package->id}}>Salvar</button>
 @stop
