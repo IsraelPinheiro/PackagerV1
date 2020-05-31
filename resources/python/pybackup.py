@@ -61,7 +61,7 @@ cursor = db.cursor()
 
 #Prepare the query and register the backup on the database
 query = "INSERT backups(name,created_at,md5,file) VALUES(%s,%s,%s,%s)"
-val = (FILE_NAME,CREATED_AT, md5_digest,BACKUP_PATH+FILE_NAME+".zip")
+val = (FILE_NAME,CREATED_AT, md5_digest,'backups/'+FILE_NAME+".zip")
 cursor.execute(query, val)
 db.commit()
 db.close()
