@@ -37,6 +37,7 @@ $(document).ready(function(){
 		formData.append("Password", $("[name='Password']").val())
 		formData.append("ExpirationDateStatus", $("[name='ExpirationDateStatus']").val())
 		formData.append("ExpirationDate", $("[name='ExpirationDate']").val())
+
 		for (let file of files.files) {
 			formData.append("files[]", file)
 		}
@@ -108,7 +109,11 @@ $(document).ready(function(){
 					data: {_method: 'delete'},
 					success:function(data){
 						$(event.target).closest("tr").remove()
-						swal("Sucesso", data.message, "success")
+						swal("Sucesso", data.message, "success").then(
+							(value) => {
+								location.reload();
+							}
+						);
 					},
 					error:function(data){
 						var errors = data.responseJSON;
