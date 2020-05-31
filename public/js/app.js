@@ -106703,6 +106703,12 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 $(document).ready(function () {
   //Buttons
   //Button New
@@ -106728,50 +106734,52 @@ $(document).ready(function () {
   }); //Button Store
 
   $(document).on("click", ".btn-package-send", function () {
-    var formData = $("#FormModal").serialize();
-    $.ajax({
-      type: "POST",
-      url: "outbounds/",
-      data: formData,
-      dataType: 'json',
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-      success: function success() {
-        console.log("Try Upload");
-        var formData = $("#FormModalFiles").serialize();
-        $.ajax({
-          type: "POST",
-          url: "outbounds/upload/",
-          data: formData,
-          dataType: 'json',
-          headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          },
-          processData: false,
-          // Important!
-          contentType: false,
-          enctype: 'multipart/form-data',
-          cache: false,
-          success: function success(data) {
-            console.log(data.responseText);
-            $('.modal').modal('hide');
-            swal("Sucesso", data.message, "success").then(function (value) {
-              location.reload();
-            });
-          },
-          error: function error(data) {
-            console.log(data.responseText);
-            var errors = data.responseJSON.errors;
-            swal("Erro", errors[Object.keys(errors)[0]][0], "error");
-          }
-        });
-      },
-      error: function error(data) {
-        var errors = data.responseJSON.errors;
-        swal("Erro", errors[Object.keys(errors)[0]][0], "error");
+    var files = document.getElementById("Files");
+    var request = new XMLHttpRequest();
+    var formData = new FormData();
+    formData.append("Title", $("[name='Title']").val());
+    formData.append("Description", $("[name='Description']").val());
+    formData.append("Recipient", $("[name='Recipient']").val());
+    formData.append("DirectLinkStatus", $("[name='DirectLinkStatus']").val());
+    formData.append("Password", $("[name='Password']").val());
+    formData.append("ExpirationDateStatus", $("[name='ExpirationDateStatus']").val());
+    formData.append("ExpirationDate", $("[name='ExpirationDate']").val());
+
+    var _iterator = _createForOfIteratorHelper(files.files),
+        _step;
+
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var file = _step.value;
+        formData.append("files[]", file);
       }
-    });
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+
+    console.log(formData);
+    request.open("POST", "outbounds/", true);
+    request.setRequestHeader("X-CSRF-TOKEN", $('meta[name="csrf-token"]').attr('content'));
+    request.send(formData);
+    /*$.ajax({
+    	url: "outbounds/",
+    	type: "POST",
+    	headers: {
+    		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    	},
+    	data: $("#FormModal").serializeArray(),
+    	dataType: 'json',
+    	cache: false,
+    	success: function(data){
+    		$("body").append(data);
+    		console.log(data.responseText)
+    	},
+    	error: function(data){
+    		console.log(data.responseText)
+    	}
+    });*/
   }); //Button Update
 
   $(document).on("click", ".btn-outbounds-update", function (event) {

@@ -26,53 +26,46 @@ $(document).ready(function(){
 
 	//Button Store
 	$(document).on("click", ".btn-package-send",function(){
-		var formData = $("#FormModal").serialize();
-		$.ajax({
-			type:"POST",
-			url:"outbounds/",
-			data: formData,
-			dataType: 'json',
+		let files = document.getElementById("Files")
+		let request = new XMLHttpRequest()
+		let formData = new FormData()
+
+		formData.append("Title", $("[name='Title']").val())
+		formData.append("Description", $("[name='Description']").val())
+		formData.append("Recipient", $("[name='Recipient']").val())
+		formData.append("DirectLinkStatus", $("[name='DirectLinkStatus']").val())
+		formData.append("Password", $("[name='Password']").val())
+		formData.append("ExpirationDateStatus", $("[name='ExpirationDateStatus']").val())
+		formData.append("ExpirationDate", $("[name='ExpirationDate']").val())
+
+		for (let file of files.files) {
+			formData.append("files[]", file)
+		}
+		console.log(formData)
+		request.open("POST", "outbounds/", true)
+		request.setRequestHeader("X-CSRF-TOKEN", $('meta[name="csrf-token"]').attr('content'))
+		request.send(formData)
+
+
+
+		
+		/*$.ajax({
+			url: "outbounds/",
+			type: "POST",
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
-			success: function(){
-				console.log("Try Upload")
-				var formData = $("#FormModalFiles").serialize();
-				$.ajax({
-					type:"POST",
-					url:"outbounds/upload/",
-					data: formData,
-					dataType: 'json',
-					headers: {
-						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-					},
-					processData: false,  // Important!
-					contentType: false,
-					enctype: 'multipart/form-data',
-					cache: false,
-					success: function(data){
-						console.log(data.responseText)
-						$('.modal').modal('hide');
-						swal("Sucesso", data.message, "success").then(
-							(value) => {
-								location.reload();
-							}
-						);
-					},
-					error: function(data){
-						console.log(data.responseText)
-						var errors = data.responseJSON.errors;
-						swal("Erro", errors[Object.keys(errors)[0]][0], "error")
-					}
-				});
-
-
+			data: $("#FormModal").serializeArray(),
+			dataType: 'json',
+			cache: false,
+			success: function(data){
+				$("body").append(data);
+				console.log(data.responseText)
 			},
 			error: function(data){
-				var errors = data.responseJSON.errors;
-				swal("Erro", errors[Object.keys(errors)[0]][0], "error")
+				console.log(data.responseText)
 			}
-		});
+		});*/
 	});
 
     //Button Update
@@ -146,6 +139,7 @@ $(document).ready(function(){
         swal("Sucesso", "Link Direto copiado para a Área de Transferência", "success")
 	});
 
+
 	$(document).on("change","#DirectLinkStatus",function(event){
 		if($("#DirectLinkStatus").val() == "2"){
 			$("#passwordContainer").removeClass("d-none")
@@ -168,8 +162,6 @@ $(document).ready(function(){
 			$("#ExpirationDate").prop('required',false);
 		}
 	});
-
-
 	$(document).on("change", "#Files", function(event){
 		if($("#Files").val()){
 			$("#FileName").text(event.target.files[0].name);

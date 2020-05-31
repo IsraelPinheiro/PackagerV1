@@ -1,7 +1,7 @@
 @extends('layouts.modal')
 @section('title','Novo Pacote de Arquivos')
 @section('content')
-	<form id="FormModal">
+	<form id="FormModal" enctype="multipart/form-data">
 		@csrf
 		{{-- Package Title --}}
 		<div class="row">
@@ -77,17 +77,13 @@
 				</div>
 			</div>
 		</div>
-	</form>
-	<form id="FormModalFiles" enctype="multipart/form-data">
-		<input type="text" class="d-none" id="PackageId" name="PackageId">
-		@csrf
 		{{-- Drop Zone --}}
 		<div class="row">
 			<div class="col-md-12">
 				<label>Arquivos Para Envio</label>
 				<div class="input-group">
 					<div class="custom-file">
-    					<input type="file" class="custom-file-input" id="Files" name="Files"multiple>
+    					<input type="file" class="custom-file-input" id="Files" name="Files" multiple>
 						<label id="FileName" class="custom-file-label noafter" for="Files" >Selecione os Arquivos</label>
   					</div>
 					<div class="input-group-append d-none">
