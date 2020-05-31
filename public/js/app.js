@@ -106466,14 +106466,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   //Buttons
-  //Button New
-  $(".btn-backups-run").click(function () {
-    $.get("/backups/create", function (data) {
-      $("body").append(data);
-      $(".modal").modal("toggle");
-    });
-  }); //Button Show
-
+  //Button Show
   $(document).on("click", ".btn-backups-show", function (event) {
     $.get("/backups/" + $(event.target).data("id"), function (data) {
       $("body").append(data);
@@ -106487,6 +106480,22 @@ $(document).ready(function () {
 
   $(document).on("click", ".btn-backups-restore", function (event) {
     swal("Indisponível", "Restauração de Backups indisponível", "warning");
+  }); //Button Run
+
+  $(document).on("click", ".btn-backups-run", function (event) {
+    swal({
+      title: "Deseja efetuar um novo Backup ?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: false
+    }).then(function (willBackup) {
+      if (willBackup) {
+        $.get("/backups/create", function (data) {
+          $("body").append(data);
+          $(".modal").modal("toggle");
+        });
+      }
+    });
   }); //Button Deletar
 
   $(document).on("click", ".btn-backups-del", function (event) {

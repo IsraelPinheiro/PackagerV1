@@ -1,12 +1,6 @@
 $(document).ready(function(){
 	//Buttons
-	//Button New
-	$(".btn-backups-run").click(function(){
-		$.get("/backups/create", function(data){
-			$("body").append(data);
-            $(".modal").modal("toggle");
-		});
-	});
+
 
     //Button Show
 	$(document).on("click", ".btn-backups-show",function(event){
@@ -24,6 +18,20 @@ $(document).ready(function(){
     //Button Restore
 	$(document).on("click", ".btn-backups-restore",function(event){
 		swal("Indisponível", "Restauração de Backups indisponível", "warning")
+	});
+	//Button Run
+	$(document).on("click", ".btn-backups-run",function(event){
+		swal({
+			title: "Deseja efetuar um novo Backup ?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: false,
+		}).then((willBackup) => {if(willBackup){
+			$.get("/backups/create", function(data){
+				$("body").append(data);
+				$(".modal").modal("toggle");
+			});
+		}});
 	});
 
 	//Button Deletar
