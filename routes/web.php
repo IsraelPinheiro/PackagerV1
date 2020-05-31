@@ -27,13 +27,13 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 Route::get('/audit/{type}', 'AuditController@index')->where("type","access|change")->name('audit.index')->middleware('auth');
 Route::get('/audit/{type}/download', 'AuditController@download')->where("type","access|change")->name('audit.download')->middleware('auth');
 //Inbound Box
+Route::get('/inbounds/download/package/{package}','InboundPackageController@downloadPackage')->name("inbounds.download.package")->middleware('auth');
+Route::get('/inbounds/download/file/{file}','InboundPackageController@downloadFile')->name("inbounds.download.file")->middleware('auth');
 Route::resource('inbounds', 'InboundPackageController')->middleware('auth');
-Route::get('/inbounds/download/{package}','InboundPackageController@downloadPackage')->name("inbounds.download.package")->middleware('auth');
-Route::get('/inbounds/download/{package}/{file}','InboundPackageController@downloadFile')->name("inbounds.download.file")->middleware('auth');
 //Outbound Box
+Route::get('/outbounds/download/package/{package}','OutboundPackageController@downloadPackage')->name("outbounds.download.package")->middleware('auth');
+Route::get('/outbounds/download/file/{file}','OutboundPackageController@downloadFile')->name("outbounds.download.file")->middleware('auth');
 Route::resource('outbounds', 'OutboundPackageController')->middleware('auth');
-Route::get('/outbounds/download/{package}','OutboundPackageController@downloadPackage')->name("outbounds.download.package")->middleware('auth');
-Route::get('/outbounds/download/{package}/{file}','OutboundPackageController@downloadFile')->name("outbounds.download.file")->middleware('auth');
 //Reports
 Route::resource('reports', 'ReportController@index')->only(['index'])->middleware('auth');
 Route::get('/reports/{type?}/{report?}', 'ReportController@index')->where("type","operational|administrative")->middleware('auth');
