@@ -102,6 +102,7 @@ class OutboundPackageController extends Controller{
      */
     public function show($id){
         $package = Package::find($id);
+        
         if($package){
             if($package->sender_id == Auth::user()->id){
                 return view('pages.packages.outbounds.show', compact('package'));
@@ -123,9 +124,10 @@ class OutboundPackageController extends Controller{
      */
     public function edit($id){
         $package = Package::find($id);
+        $users = User::all();
         if($package){
             if($package->sender_id == Auth::user()->id){
-                return view('pages.packages.outbounds.edit', compact('package'));
+                return view('pages.packages.outbounds.edit', compact('package','users'));
             }
             else{
                 abort(401);
