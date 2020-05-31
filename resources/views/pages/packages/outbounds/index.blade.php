@@ -34,8 +34,8 @@
 						<td><center>{{ $package->files->count() }}</center></td>
 						<td class="toolbox">
                             <center>
-                                <i data-id={{$package->id}} class="fas fa-download fa-lg btn-outbounds-download pr-1" title="Baixar Arquivos do Pacote"></i>
-                                <i data-id={{$package->id}} class="fas fa-eye fa-lg btn-outbounds-show pr-1" title="Exibir"></i>
+								<i class="fas fa-download fa-lg btn-outbounds-download pr-1" title="Baixar Arquivos do Pacote" onclick='javascript:location.href="{{ route('outbounds.download.package',['package' => $package->id]) }}"'></i>
+								<i data-id={{$package->id}} class="fas fa-eye fa-lg btn-outbounds-show pr-1" title="Exibir"></i>
 								@if(!$package->expires_at)
 									@if($package->key)
 										<i data-key={{$package->key}} class="fas fa-link fa-lg btn-outbounds-link pr-1" title="Gerar Link Direto"></i>
