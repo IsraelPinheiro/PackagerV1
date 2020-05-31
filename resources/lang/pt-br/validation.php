@@ -151,6 +151,8 @@ return [
         'Email' => 'Email',
         'Password' => 'Senha',
         'Profile' => 'Perfil',
+        'Title' => 'Título',
+        'Recipient' => 'Destinatário',
     ],
 
 ];
