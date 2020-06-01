@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Package;
 
 class PackageController extends Controller{
     /**
@@ -10,67 +11,69 @@ class PackageController extends Controller{
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(){
-        //
+    public function index($key){
+        $package = Package::where('key',$key)->firstOrFail();
+        if($package){
+            if(!$package->expires_at->isPast()){
+                return view('pages.packages.external', compact('package'));
+            }
+            else{
+                abort(401);
+            }
+        }
+        else{
+            abort(404);
+        }
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Download the specified package from storage.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create(){
-        //
+    public function downloadPackage(Request $request){
+        $package = Package::find($id);
+        if($package){
+            if(!$package->expires_at->isPast()){
+                $tempFile = 'temp/'.md5(Carbon::now()).'.zip';
+                $zip = new ZipArchive();
+                if($zip->open(public_path($tempFile), ZipArchive::CREATE | ZipArchive::OVERWRITE)){
+                    foreach ($package->files as $file) {
+                        $zip->addFile(str_replace("\\", "/",Storage::disk('local')->path($file->file)),$file->originalName);
+                    }
+                    if($zip->close()){
+                        return response()->download(public_path($tempFile), $package->title.'.zip');
+                    }
+                }
+            }
+            else{
+                abort(401);
+            }
+        }
+        else{
+            return response()->json(['message' => 'Pacote não encontrado'],404);
+        } 
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Download the specified file from storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request){
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id){
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id){
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id){
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id){
-        //
+    public function downloadFile(Request $request){
+        $file = File::find($id);
+        if($file){
+            if(!$package->expires_at->isPast()){
+                return Storage::download($file->file, $file->originalName);
+            }
+            else{
+                abort(401);
+            }
+        }
+        else{
+            return response()->json(['message' => 'Arquivo não encontrado'],404);
+        }        
     }
 }
