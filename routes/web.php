@@ -35,8 +35,8 @@ Route::get('/outbounds/download/package/{package}','OutboundPackageController@do
 Route::get('/outbounds/download/file/{file}','OutboundPackageController@downloadFile')->name("outbounds.download.file")->middleware('auth');
 Route::resource('outbounds', 'OutboundPackageController')->middleware('auth');
 //Reports
-Route::resource('reports', 'ReportController@index')->only(['index'])->middleware('auth');
-Route::get('/reports/{type?}/{report?}', 'ReportController@index')->where("type","operational|administrative")->middleware('auth');
+Route::get('/reports/{type}', 'ReportController@index')->where("type","operational|administrative")->name("reports.index")->middleware('auth');
+Route::get('/reports/{type}/{id?}', 'ReportController@report')->where("type","operational|administrative")->name("reports.index.report")->middleware('auth');
 //Dashboards
 Route::get('/dashboards/{type}', 'DashboardController@index')->where("type","management|operational")->name('dashboards.index')->middleware('auth');
 Route::get('/dashboards/{type}/charts', 'DashboardController@charts')->where("type","management|operational")->name('dashboards.charts')->middleware('auth');

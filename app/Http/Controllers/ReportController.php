@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 
 class ReportController extends Controller{
     /**
@@ -10,8 +11,19 @@ class ReportController extends Controller{
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(){
-        //
+    public function index($type){
+        if($type=="administrative"){
+            $userPermissions = json_decode(Auth::user()->profile->acl_reports_administrative);
+            if($userPermissions->read){
+                return view('pages.reports.administrative');
+            }
+        }
+        else if($type=="operational"){
+            $userPermissions = json_decode(Auth::user()->profile->acl_reports_operational);
+            if($userPermissions->read){
+                return view('pages.reports.operational');
+            }
+        }
     }
 
     /**
@@ -19,58 +31,37 @@ class ReportController extends Controller{
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(){
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request){
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id){
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id){
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id){
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id){
-        //
+    public function report($type, $id){
+        if($type=="administrative"){
+            $userPermissions = json_decode(Auth::user()->profile->acl_reports_administrative);
+            if($userPermissions->read){
+                if($id==0){
+                    return view('pages.reports.administrative');
+                }
+                else if($id==1){
+                    return view('pages.reports.administrative');
+                }
+                else if($id==2){
+                    return view('pages.reports.administrative');
+                }
+                else{
+                    abort(404);
+                } 
+            }
+        }
+        else if($type=="operational"){
+            $userPermissions = json_decode(Auth::user()->profile->acl_reports_operational);
+            if($userPermissions->read){
+                if($id==0){
+                    return view('pages.reports.administrative');
+                }
+                else if($id==1){
+                    return view('pages.reports.administrative');
+                }
+                else{
+                    abort(404);
+                } 
+            }
+        }
     }
 }
