@@ -21,7 +21,7 @@ DB_HOST = args.host
 DB_USER = args.user
 DB_USER_PASSWORD = args.password
 DB_NAME = args.database
-BACKUP_PATH = 'storage/app/backups/'
+BACKUP_PATH = '../../storage/app/backups/'
 #Create backup directory if it doesn't exists
 if not os.path.exists(BACKUP_PATH):
     os.makedirs(BACKUP_PATH)
