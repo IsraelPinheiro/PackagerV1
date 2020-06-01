@@ -55,7 +55,7 @@ class UserController extends Controller{
                 'Name' => 'bail|required|min:3|string',
                 'Email' => 'bail|required|email|unique:users,email',
                 'Profile' => 'bail|required',
-                'Password' => 'bail|required|min:6|confirmed|regex:/^.*(?=.{6,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\X])(?=.*[!@#$%&*]).*$/'
+                //'Password' => 'bail|required|min:6|confirmed|regex:/^.*(?=.{6,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\X])(?=.*[!@#$%&*]).*$/'
             ]);
             $user = new User;
             $user->name = $request->Name;
@@ -150,7 +150,7 @@ class UserController extends Controller{
                 $request->validate([
                     'Name' => 'bail|required|min:3|string',
                     'Email' => 'bail|required|email|unique:users,email,'.$user->id,
-                    'Password' => 'sometimes|nullable|min:6|confirmed|regex:/^.*(?=.{6,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\X])(?=.*[!@#$%&*]).*$/'
+                    //'Password' => 'sometimes|nullable|min:6|confirmed|regex:/^.*(?=.{6,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\X])(?=.*[!@#$%&*]).*$/'
                 ]);
                 if(env('TRACK_CHANGES', true)){
                     $log = new ChangeLog;
@@ -286,7 +286,7 @@ class UserController extends Controller{
      */
     public function updatePassword(Request $request){
         $request->validate([
-            'Password' => 'bail|required|min:6|confirmed|regex:/^.*(?=.{6,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\X])(?=.*[!@#$%&*]).*$/'
+            //'Password' => 'bail|required|min:6|confirmed|regex:/^.*(?=.{6,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\X])(?=.*[!@#$%&*]).*$/'
         ]);
         $user = User::find(Auth::user()->id);
         if(env('TRACK_CHANGES', true)){
