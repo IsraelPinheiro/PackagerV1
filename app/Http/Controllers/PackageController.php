@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Package;
+use Carbon\Carbon;
+use ZipArchive;
+use Storage;
 
 class PackageController extends Controller{
     /**
@@ -32,8 +35,8 @@ class PackageController extends Controller{
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function downloadPackage(Request $request){
-        $package = Package::find($id);
+    public function downloadPackage($key){
+        $package = Package::where('key',$key)->firstOrFail();
         if($package){
             if(!$package->expires_at->isPast()){
                 $tempFile = 'temp/'.md5(Carbon::now()).'.zip';
@@ -62,14 +65,20 @@ class PackageController extends Controller{
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function downloadFile(Request $request){
+    public function downloadFile($key, $file){
+        $package = Package::where('key',$key)->firstOrFail();
         $file = File::find($id);
-        if($file){
-            if(!$package->expires_at->isPast()){
-                return Storage::download($file->file, $file->originalName);
+        if($file && $package){
+            if($file->package->key == $package->key){
+                if(!$package->expires_at->isPast()){
+                    return Storage::download($file->file, $file->originalName);
+                }
+                else{
+                    abort(401);
+                }
             }
             else{
-                abort(401);
+                return response()->json(['message' => 'Arquivo não encontrado'],404);
             }
         }
         else{

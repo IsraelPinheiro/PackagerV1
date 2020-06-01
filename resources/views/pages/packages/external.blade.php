@@ -44,14 +44,14 @@
                     <div class="input-group pb-1">
                         <input name="DirectLinkStatus" id="DirectLinkStatus" type="text" value="{{$file->originalName}}" class="form-control" disabled>
                         <div class="input-group-append">
-                            <a class="btn btn-primary" href="{{ route('outbounds.download.file',['file' => $file->id]) }}" role="button">
+                            <a class="btn btn-primary" href="{{ route('outbounds.download.file',['key' => $package->key,'file' => $file->id]) }}" role="button">
                                 <i class="fas fa-download btn-file-download pr-1" title="Baixar Arquivo"></i>
                             </a>
                         </div>
                     </div>
                 @endforeach
-                <a class="btn btn-primary btn-block" href="{{ route('outbounds.download.package',['package' => $package->id]) }}" role="button">
-                    <i data-key={{$package->id}} class="fas fa-download btn-file-download pr-1" title="Baixar o pacote de arquivos"></i>
+                <a class="btn btn-primary btn-block" href="{{ route('package.download.package',['key' => $package->key]) }}" role="button">
+                    <i class="fas fa-download btn-file-download pr-1" title="Baixar o pacote de arquivos"></i>
                     Baixar Pacote
                 </a>
             </div>
