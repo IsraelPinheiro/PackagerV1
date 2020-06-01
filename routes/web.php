@@ -35,10 +35,9 @@ Route::get('/outbounds/download/package/{package}','OutboundPackageController@do
 Route::get('/outbounds/download/file/{file}','OutboundPackageController@downloadFile')->name("outbounds.download.file")->middleware('auth');
 Route::resource('outbounds', 'OutboundPackageController')->middleware('auth');
 //Direct Access
-Route::get('/package/{key}', 'PackageController@index');
-Route::post('/package/{key}/file/{id}', 'PackageController@downloadFile');
-Route::post('/package/{key}', 'PackageController@downloadPackage');
-
+Route::get('/package/{key}', 'PackageController@index')->name("package.index");
+Route::get('/package/download/{key}/file/{id}', 'PackageController@downloadFile')->name("package.download.file");
+Route::get('/package/download/{key}', 'PackageController@downloadPackage')->name("package.download.package");
 //Reports
 Route::get('/reports/{type}', 'ReportController@index')->where("type","operational|administrative")->name("reports.index")->middleware('auth');
 Route::get('/reports/{type}/{id?}', 'ReportController@report')->where("type","operational|administrative")->name("reports.index.report")->middleware('auth');
